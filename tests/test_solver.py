@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import rectangle_packing_solver as rps
 from example_data import example_problem  # noqa: F401
+
+import rectangle_packing_solver as rps
 
 
 def test_solver(example_problem):  # noqa: F811

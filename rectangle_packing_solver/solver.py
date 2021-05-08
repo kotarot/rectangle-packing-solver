@@ -19,8 +19,8 @@ from contextlib import redirect_stderr
 import simanneal
 
 from .problem import Problem
-from .solution import Solution
 from .sequence_pair import SequencePair
+from .solution import Solution
 
 
 class Solver:

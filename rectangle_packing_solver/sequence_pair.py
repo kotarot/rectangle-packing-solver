@@ -14,8 +14,8 @@
 
 import graphlib
 
-from .problem import Problem
 from .floorplan import Floorplan
+from .problem import Problem
 
 
 class SequencePair:

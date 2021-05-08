@@ -14,8 +14,9 @@
 
 import math
 
+from example_data import example_pair_horizontally, example_pair_vertically, example_problem  # noqa: F401
+
 import rectangle_packing_solver as rps
-from example_data import example_problem, example_pair_horizontally, example_pair_vertically  # noqa: F401
 
 
 def test_sequence_pair_init_horizontally(example_pair_horizontally):  # noqa: F811

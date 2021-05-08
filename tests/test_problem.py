@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import pytest
+from example_data import example_problem  # noqa: F401
 
 import rectangle_packing_solver as rps
-from example_data import example_problem  # noqa: F401
 
 
 def test_problem_init(example_problem):  # noqa: F811

@@ -28,6 +28,7 @@ def example_problem():
 
 @pytest.fixture
 def example_pair_horizontally():
+    # By this pair of sequences, all of the four rectangles are aligned in a strait line horizontally.
     gp = [0, 1, 2, 3]
     gn = [0, 1, 2, 3]
     pair = (gp, gn)
@@ -36,6 +37,7 @@ def example_pair_horizontally():
 
 @pytest.fixture
 def example_pair_vertically():
+    # By this pair of sequences, all of the four rectangles are aligned in a strait line vertically.
     gp = [0, 1, 2, 3]
     gn = [3, 2, 1, 0]
     pair = (gp, gn)

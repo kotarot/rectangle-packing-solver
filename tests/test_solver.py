@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pytest
-
 import rectangle_packing_solver as rps
-from example_data import example_problem
+from example_data import example_problem  # noqa: F401
 
 
-def test_solver(example_problem):
+def test_solver(example_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_problem)
     solver = rps.Solver()
     solution = solver.solve(problem)

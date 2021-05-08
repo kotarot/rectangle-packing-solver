@@ -12,10 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import math
 import os
 import random
-from collections import defaultdict
 from contextlib import redirect_stderr
 
 import simanneal
@@ -109,6 +107,6 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         Retrieve G_{+}, G_{-}, and rotations from a state.
         """
         gp = state[0:n]
-        gn = state[n : 2 * n]
-        rotations = state[2 * n : 3 * n]
+        gn = state[n : 2 * n]  # noqa: E203
+        rotations = state[2 * n : 3 * n]  # noqa: E203
         return (gp, gn, rotations)

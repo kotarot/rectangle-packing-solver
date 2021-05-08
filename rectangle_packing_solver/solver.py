@@ -12,17 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import math
 import os
 import random
-from collections import defaultdict
 from contextlib import redirect_stderr
+from typing import List, Tuple, Union
 
 import simanneal
 
 from .problem import Problem
-from .solution import Solution
 from .sequence_pair import SequencePair
+from .solution import Solution
 
 
 class Solver:
@@ -33,8 +32,7 @@ class Solver:
     def __init__(self) -> None:
         pass
 
-
-    def solve(self, problem, simanneal_minutes=0.1, simanneal_steps=100):
+    def solve(self, problem: Problem, simanneal_minutes: float = 0.1, simanneal_steps: int = 100) -> Solution:
         if not isinstance(problem, Problem):
             raise TypeError("Invalid argument: 'problem' must be an instance of Problem.")
 
@@ -64,20 +62,19 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
     Annealer for the rectangle packing problem.
     """
 
-    def __init__(self, state, problem) -> None:
+    def __init__(self, state: List[int], problem: Problem) -> None:
         self.seqpair = SequencePair()
         self.problem = problem
         super(RectanglePackingProblemAnnealer, self).__init__(state)
 
-
-    def move(self):
+    def move(self) -> Union[int, float]:
         """
         Move state (sequence-pair) and return the energy diff.
         """
 
         initial_energy = self.energy()
 
-        # Choose two indices and swap them 
+        # Choose two indices and swap them
         i = random.randint(0, self.problem.n - 1)  # The first index
         j = random.randint(0, self.problem.n - 1)  # The second index
         offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
@@ -93,8 +90,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
         return self.energy() - initial_energy
 
-
-    def energy(self):
+    def energy(self) -> Union[int, float]:
         """
         Calculates the area of boundary box.
         """
@@ -106,13 +102,12 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
         return floorplan.area
 
-
     @classmethod
-    def retrieve_pairs(cls, n, state):
+    def retrieve_pairs(cls, n: int, state: List[int]) -> Tuple:
         """
         Retrieve G_{+}, G_{-}, and rotations from a state.
         """
         gp = state[0:n]
-        gn = state[n:2 * n]
-        rotations = state[2 * n:3 * n]
+        gn = state[n : 2 * n]  # noqa: E203
+        rotations = state[2 * n : 3 * n]  # noqa: E203
         return (gp, gn, rotations)

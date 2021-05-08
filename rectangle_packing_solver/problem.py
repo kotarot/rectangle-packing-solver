@@ -12,12 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Dict, List, Union
+
+
 class Problem:
     """
     A class to represent a rectangle packing problem.
     """
 
-    def __init__(self, rectangles) -> None:
+    def __init__(self, rectangles: List[Union[Dict, List]]) -> None:
         self.rectangles = []
         self.n = 0
 
@@ -26,24 +29,27 @@ class Problem:
 
         for r in rectangles:
             if isinstance(r, list):
-                self.rectangles.append({
-                    "id": self.n,
-                    "width": r[0],
-                    "height": r[1],
-                    "rotatable": r[2] if len(r) >= 3 else False,
-                })
+                self.rectangles.append(
+                    {
+                        "id": self.n,
+                        "width": r[0],
+                        "height": r[1],
+                        "rotatable": r[2] if len(r) >= 3 else False,
+                    }
+                )
             elif isinstance(r, dict):
-                self.rectangles.append({
-                    "id": self.n,
-                    "width": r["width"],
-                    "height": r["height"],
-                    "rotatable": r["rotatable"] if "rotatable" in r else False,
-                })
+                self.rectangles.append(
+                    {
+                        "id": self.n,
+                        "width": r["width"],
+                        "height": r["height"],
+                        "rotatable": r["rotatable"] if "rotatable" in r else False,
+                    }
+                )
             else:
                 raise TypeError("A rectangle must be a list or a dict.")
 
             self.n += 1
-
 
     def __repr__(self) -> str:
         s = "Problem({"

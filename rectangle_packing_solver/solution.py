@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .sequence_pair import SequencePair
 from .floorplan import Floorplan
+from .sequence_pair import SequencePair
 
 
 class Solution:
@@ -21,7 +21,7 @@ class Solution:
     A class to represent a rectangle packing solution.
     """
 
-    def __init__(self, sequence_pair, floorplan) -> None:
+    def __init__(self, sequence_pair: SequencePair, floorplan: Floorplan) -> None:
 
         if not isinstance(sequence_pair, SequencePair):
             raise TypeError("Invalid argument: 'sequence_pair' must be an instance of SequencePair.")
@@ -31,7 +31,6 @@ class Solution:
 
         self.sequence_pair = sequence_pair
         self.floorplan = floorplan
-
 
     def __repr__(self) -> str:
         s = "Solution({"

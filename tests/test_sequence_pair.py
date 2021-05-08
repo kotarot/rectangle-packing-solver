@@ -14,13 +14,12 @@
 
 import math
 
-import pytest
+from example_data import example_pair_horizontally, example_pair_vertically, example_problem  # noqa: F401
 
 import rectangle_packing_solver as rps
-from example_data import example_problem, example_pair_horizontally, example_pair_vertically
 
 
-def test_sequence_pair_init_horizontally(example_pair_horizontally):
+def test_sequence_pair_init_horizontally(example_pair_horizontally):  # noqa: F811
     seqpair = rps.SequencePair(pair=example_pair_horizontally)
 
     assert seqpair.pair == example_pair_horizontally
@@ -32,7 +31,7 @@ def test_sequence_pair_init_horizontally(example_pair_horizontally):
     assert seqpair.oblique_grid.coordinates == [{"x": 0, "y": 0}, {"x": 1, "y": 1}, {"x": 2, "y": 2}, {"x": 3, "y": 3}]
 
 
-def test_sequence_pair_init_vertically(example_pair_vertically):
+def test_sequence_pair_init_vertically(example_pair_vertically):  # noqa: F811
     seqpair = rps.SequencePair(pair=example_pair_vertically)
 
     assert seqpair.pair == example_pair_vertically
@@ -44,7 +43,7 @@ def test_sequence_pair_init_vertically(example_pair_vertically):
     assert seqpair.oblique_grid.coordinates == [{"x": 0, "y": 3}, {"x": 1, "y": 2}, {"x": 2, "y": 1}, {"x": 3, "y": 0}]
 
 
-def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizontally):
+def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizontally):  # noqa: F811
     seqpair = rps.SequencePair(pair=example_pair_horizontally)
     floorplan = seqpair.decode(problem=rps.Problem(rectangles=example_problem))
 
@@ -79,7 +78,7 @@ def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizon
     assert floorplan.area == 66.6
 
 
-def test_sequence_pair_decode_vertically(example_problem, example_pair_vertically):
+def test_sequence_pair_decode_vertically(example_problem, example_pair_vertically):  # noqa: F811
     seqpair = rps.SequencePair(pair=example_pair_vertically)
     floorplan = seqpair.decode(problem=rps.Problem(rectangles=example_problem))
 

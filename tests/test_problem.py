@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import pytest
+from example_data import example_problem  # noqa: F401
 
 import rectangle_packing_solver as rps
-from example_data import example_problem
 
 
-def test_problem_init(example_problem):
+def test_problem_init(example_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_problem)
 
     assert problem.n == 4
@@ -51,7 +51,7 @@ def test_problem_init(example_problem):
 
 def test_problem_type_error():
     with pytest.raises(TypeError):
-        problem = rps.Problem(rectangles="invalid type")
+        rps.Problem(rectangles="invalid type")
 
     with pytest.raises(TypeError):
-        problem = rps.Problem(rectangles=["invalid type"])
+        rps.Problem(rectangles=["invalid type"])

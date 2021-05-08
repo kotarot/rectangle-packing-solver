@@ -12,20 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Dict, List, Tuple, Union
+
 
 class Floorplan:
     """
     A class to represent a rectangle packing floorplan.
     """
 
-    def __init__(self, positions, boundary_box, area=-1.0) -> None:
+    def __init__(self, positions: List[Dict], boundary_box: Tuple, area: Union[int, float] = -1.0) -> None:
         self.positions = positions
         self.boundary_box = boundary_box
         if 0 < area:
             self.area = area
         else:
             self.area = boundary_box[0] * boundary_box[1]
-
 
     def __repr__(self) -> str:
         s = "Floorplan({"

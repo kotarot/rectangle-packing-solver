@@ -32,7 +32,6 @@ class Solution:
         self.sequence_pair = sequence_pair
         self.floorplan = floorplan
 
-
     def __repr__(self) -> str:
         s = "Solution({"
         s += "'sequence_pair': " + str(self.sequence_pair) + ", "

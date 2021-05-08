@@ -33,7 +33,6 @@ class Solver:
     def __init__(self) -> None:
         pass
 
-
     def solve(self, problem, simanneal_minutes=0.1, simanneal_steps=100):
         if not isinstance(problem, Problem):
             raise TypeError("Invalid argument: 'problem' must be an instance of Problem.")
@@ -69,7 +68,6 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         self.problem = problem
         super(RectanglePackingProblemAnnealer, self).__init__(state)
 
-
     def move(self):
         """
         Move state (sequence-pair) and return the energy diff.
@@ -77,7 +75,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
         initial_energy = self.energy()
 
-        # Choose two indices and swap them 
+        # Choose two indices and swap them
         i = random.randint(0, self.problem.n - 1)  # The first index
         j = random.randint(0, self.problem.n - 1)  # The second index
         offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
@@ -93,7 +91,6 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
         return self.energy() - initial_energy
 
-
     def energy(self):
         """
         Calculates the area of boundary box.
@@ -106,13 +103,12 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
         return floorplan.area
 
-
     @classmethod
     def retrieve_pairs(cls, n, state):
         """
         Retrieve G_{+}, G_{-}, and rotations from a state.
         """
         gp = state[0:n]
-        gn = state[n:2 * n]
-        rotations = state[2 * n:3 * n]
+        gn = state[n : 2 * n]
+        rotations = state[2 * n : 3 * n]
         return (gp, gn, rotations)

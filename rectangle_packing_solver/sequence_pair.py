@@ -39,7 +39,6 @@ class SequencePair:
 
         self.oblique_grid = self.pair_to_obliquegrid(pair=self.pair)
 
-
     def decode(self, problem, rotations=None):
         """
         Decode:
@@ -113,14 +112,15 @@ class SequencePair:
         # Calculate bottom-left positions
         positions = []
         for i in range(self.n):
-            positions.append({
-                "id": i,
-                "x": dist_h[i] - width_wrot[i],   # distance from left
-                "y": dist_v[i] - height_wrot[i],  # distande from bottom
-            })
+            positions.append(
+                {
+                    "id": i,
+                    "x": dist_h[i] - width_wrot[i],  # distance from left edge
+                    "y": dist_v[i] - height_wrot[i],  # distande from bottom edge
+                }
+            )
 
         return Floorplan(boundary_box=(bb_width, bb_height), positions=positions)
-
 
     def encode(self):
         """
@@ -129,10 +129,8 @@ class SequencePair:
         """
         raise NotImplementedError()
 
-
     def __repr__(self) -> str:
         return "SequencePair(" + str(self.pair) + ")"
-
 
     @classmethod
     def pair_to_obliquegrid(cls, pair):
@@ -156,7 +154,6 @@ class SequencePair:
             coordinates[i] = {"x": index_p, "y": index_n}
 
         return ObliqueGrid(grid=grid, coordinates=coordinates)
-
 
     @classmethod
     def obliquegrid_to_pair(cls, oblique_grid):

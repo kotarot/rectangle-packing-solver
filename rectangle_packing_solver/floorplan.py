@@ -26,7 +26,6 @@ class Floorplan:
         else:
             self.area = boundary_box[0] * boundary_box[1]
 
-
     def __repr__(self) -> str:
         s = "Floorplan({"
         s += "'positions': " + str(self.positions) + ", "

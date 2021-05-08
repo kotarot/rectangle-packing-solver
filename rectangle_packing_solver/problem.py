@@ -12,13 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from typing import Dict, List, Union
+
 
 class Problem:
     """
     A class to represent a rectangle packing problem.
     """
 
-    def __init__(self, rectangles) -> None:
+    def __init__(self, rectangles: List[Union[Dict, List]]) -> None:
         self.rectangles = []
         self.n = 0
 

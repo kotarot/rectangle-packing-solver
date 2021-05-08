@@ -28,7 +28,7 @@ jobs:
     - name: Lint with isort
       run: isort . --check-only --diff
     - name: Check types with mypy
-      run: mypy
+      run: mypy rectangle_packing_solver
 
   unit_tests:
     name: 'Run unit tests'

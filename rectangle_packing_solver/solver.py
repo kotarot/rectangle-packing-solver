@@ -15,6 +15,7 @@
 import os
 import random
 from contextlib import redirect_stderr
+from typing import List, Tuple, Union
 
 import simanneal
 
@@ -31,7 +32,7 @@ class Solver:
     def __init__(self) -> None:
         pass
 
-    def solve(self, problem, simanneal_minutes=0.1, simanneal_steps=100):
+    def solve(self, problem: Problem, simanneal_minutes: float = 0.1, simanneal_steps: int = 100) -> Solution:
         if not isinstance(problem, Problem):
             raise TypeError("Invalid argument: 'problem' must be an instance of Problem.")
 
@@ -61,12 +62,12 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
     Annealer for the rectangle packing problem.
     """
 
-    def __init__(self, state, problem) -> None:
+    def __init__(self, state: List[int], problem: Problem) -> None:
         self.seqpair = SequencePair()
         self.problem = problem
         super(RectanglePackingProblemAnnealer, self).__init__(state)
 
-    def move(self):
+    def move(self) -> Union[int, float]:
         """
         Move state (sequence-pair) and return the energy diff.
         """
@@ -89,7 +90,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
         return self.energy() - initial_energy
 
-    def energy(self):
+    def energy(self) -> Union[int, float]:
         """
         Calculates the area of boundary box.
         """
@@ -102,7 +103,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         return floorplan.area
 
     @classmethod
-    def retrieve_pairs(cls, n, state):
+    def retrieve_pairs(cls, n: int, state: List[int]) -> Tuple:
         """
         Retrieve G_{+}, G_{-}, and rotations from a state.
         """

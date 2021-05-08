@@ -13,9 +13,16 @@
 # limitations under the License.
 
 import graphlib
+from typing import Dict, List, Optional, Tuple
 
 from .floorplan import Floorplan
 from .problem import Problem
+
+
+class ObliqueGrid:
+    def __init__(self, grid: List[List[int]], coordinates: List[Dict]) -> None:
+        self.grid = grid
+        self.coordinates = coordinates
 
 
 class SequencePair:
@@ -23,7 +30,7 @@ class SequencePair:
     A class of Sequence-Pair.
     """
 
-    def __init__(self, pair=([], [])) -> None:
+    def __init__(self, pair: Tuple[List, List] = ([], [])) -> None:
         if not isinstance(pair, tuple):
             raise TypeError("Invalid argument: 'pair' must be a tuple.")
         if len(pair) != 2:
@@ -39,7 +46,7 @@ class SequencePair:
 
         self.oblique_grid = self.pair_to_obliquegrid(pair=self.pair)
 
-    def decode(self, problem, rotations=None):
+    def decode(self, problem: Problem, rotations: Optional[List] = None) -> Floorplan:
         """
         Decode:
             Based on the sequence pair and the problem with rotations information, calculate a floorplan (boundary box, area, and rectangle positions).
@@ -73,7 +80,7 @@ class SequencePair:
 
         # Calculate the longest path in the "Horizontal Constraint Graph" (G_h)
         # This time complexity is O(n^2), may be optimized...
-        graph_h = {i: [] for i in range(self.n)}
+        graph_h: Dict[int, List] = {i: [] for i in range(self.n)}
         for i in range(self.n):
             for j in range(self.n):
                 # When j is right of i, set an edge from j to i
@@ -92,7 +99,7 @@ class SequencePair:
 
         # Calculate the longest path in the "Vertical Constraint Graph" (G_v)
         # This time complexity is O(n^2), may be optimized...
-        graph_v = {i: [] for i in range(self.n)}
+        graph_v: Dict[int, List] = {i: [] for i in range(self.n)}
         for i in range(self.n):
             for j in range(self.n):
                 # When j is above i, set an edge from j to i
@@ -122,7 +129,7 @@ class SequencePair:
 
         return Floorplan(boundary_box=(bb_width, bb_height), positions=positions)
 
-    def encode(self):
+    def encode(self) -> None:
         """
         Encode:
             TODO
@@ -133,7 +140,7 @@ class SequencePair:
         return "SequencePair(" + str(self.pair) + ")"
 
     @classmethod
-    def pair_to_obliquegrid(cls, pair):
+    def pair_to_obliquegrid(cls, pair: Tuple[List, List]) -> ObliqueGrid:
         """
         Convert a Sequence-pair (a tuple of G_{+} and G_{-}) to Oblique-grid.
         """
@@ -156,7 +163,7 @@ class SequencePair:
         return ObliqueGrid(grid=grid, coordinates=coordinates)
 
     @classmethod
-    def obliquegrid_to_pair(cls, oblique_grid):
+    def obliquegrid_to_pair(cls, oblique_grid: ObliqueGrid) -> Tuple[List, List]:
         """
         Convert an Oblique-grid to Sequence-pair (a tuple of G_{+} and G_{-}).
         """
@@ -174,9 +181,3 @@ class SequencePair:
                     gn[y] = rectangle_id
 
         return (gp, gn)
-
-
-class ObliqueGrid:
-    def __init__(self, grid, coordinates) -> None:
-        self.grid = grid
-        self.coordinates = coordinates

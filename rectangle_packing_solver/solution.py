@@ -21,7 +21,7 @@ class Solution:
     A class to represent a rectangle packing solution.
     """
 
-    def __init__(self, sequence_pair, floorplan) -> None:
+    def __init__(self, sequence_pair: SequencePair, floorplan: Floorplan) -> None:
 
         if not isinstance(sequence_pair, SequencePair):
             raise TypeError("Invalid argument: 'sequence_pair' must be an instance of SequencePair.")

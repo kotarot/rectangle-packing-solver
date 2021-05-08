@@ -20,12 +20,14 @@ import rectangle_packing_solver as rps
 
 def main():
     # Define a problem
-    problem = rps.Problem(rectangles=[
-        [4, 6],  # Format: [width, height]
-        {"width": 4, "height": 4},  # Or can be defined as dict. Default rotatable: False
-        {"width": 2.1, "height": 3.2, "rotatable": False},
-        {"width": 1, "height": 5, "rotatable": True},
-    ])
+    problem = rps.Problem(
+        rectangles=[
+            [4, 6],  # Format: [width, height]
+            {"width": 4, "height": 4},  # Or can be defined as dict. Default rotatable: False
+            {"width": 2.1, "height": 3.2, "rotatable": False},
+            {"width": 1, "height": 5, "rotatable": True},
+        ]
+    )
     print("problem:", problem)
 
     # Get a solver

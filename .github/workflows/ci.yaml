@@ -3,6 +3,33 @@ name: ci
 on: [push]
 
 jobs:
+  lint:
+    name: 'Lint with black, flake8, isort, and mypy'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install ".[dev]"
+    - name: List installed packages
+      run: pip list
+    - name: Lint with black
+      run: black . --check --diff
+    - name: Lint with flake8
+      run: flake8 . --statistics --count --show-source
+    - name: Lint with isort
+      run: isort . --check-only --diff
+    - name: Check types with mypy
+      run: mypy
+
   unit_tests:
     name: 'Run unit tests'
     runs-on: ${{ matrix.os }}

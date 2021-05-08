@@ -38,7 +38,8 @@ setuptools.setup(
     version=version,
     license="Apache 2.0",
     install_requires=[
-        "simanneal>=0.5.0",
+        "simanneal>=0.5.0,<1.0.0",
+        "graphlib-backport>=1.0.3,<2.0.0",  # TODO: Drop this when we drop 3.8 support
     ],
     extras_require={
         "dev": [
@@ -62,6 +63,9 @@ setuptools.setup(
         "Development Status :: 4 - Beta",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: Apache Software License",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
     ],
 )

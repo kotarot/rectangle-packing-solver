@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from .sequence_pair import SequencePair
+from .floorplan import Floorplan
 
 
 class Solution:
@@ -21,6 +22,13 @@ class Solution:
     """
 
     def __init__(self, sequence_pair, floorplan) -> None:
+
+        if not isinstance(sequence_pair, SequencePair):
+            raise TypeError("Invalid argument: 'sequence_pair' must be an instance of SequencePair.")
+
+        if not isinstance(floorplan, Floorplan):
+            raise TypeError("Invalid argument: 'floorplan' must be an instance of Floorplan.")
+
         self.sequence_pair = sequence_pair
         self.floorplan = floorplan
 

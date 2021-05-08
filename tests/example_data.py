@@ -27,7 +27,15 @@ def example_problem():
 
 
 @pytest.fixture
-def example_pair():
+def example_pair_horizontally():
+    gp = [0, 1, 2, 3]
+    gn = [0, 1, 2, 3]
+    pair = (gp, gn)
+    return pair
+
+
+@pytest.fixture
+def example_pair_vertically():
     gp = [0, 1, 2, 3]
     gn = [3, 2, 1, 0]
     pair = (gp, gn)

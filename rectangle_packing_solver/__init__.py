@@ -22,4 +22,6 @@ from .floorplan import Floorplan
 # Solvers
 from .solver import Solver
 
-__all__ = ["Problem", "Solution", "SequencePair", "Floorplan", "Solver"]
+from .__version__ import __version__, __version_info__
+
+__all__ = ["Problem", "Solution", "SequencePair", "Floorplan", "Solver", "__version__", "__version_info__"]

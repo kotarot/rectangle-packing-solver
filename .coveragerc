@@ -1,0 +1,5 @@
+[run]
+omit =
+    example/*
+    tests/*
+    setup.py

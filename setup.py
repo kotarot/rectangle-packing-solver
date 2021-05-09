@@ -45,6 +45,7 @@ setuptools.setup(
         "dev": [
             # For test
             "pytest>=6.2.4,<7.0.0",
+            "pytest-cov>=2.11.1,<3.0.0",
             # For lint
             "black>=21.5b0,<22.0",
             "flake8>=3.9.1,<4.0.0",

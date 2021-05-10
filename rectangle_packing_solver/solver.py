@@ -90,7 +90,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
 
     def energy(self) -> Union[int, float]:
         """
-        Calculates the area of boundary box.
+        Calculates the area of bounding box.
         """
 
         # Pick up sequence-pair and rotations from state

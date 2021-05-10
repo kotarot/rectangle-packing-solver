@@ -27,10 +27,10 @@ def test_solver(example_problem):  # noqa: F811
     assert isinstance(solution.floorplan, rps.Floorplan)
 
     # The optimal solution is any of ([0, 1, 3, 2], [3, 0, 2, 1]), ([1, 2, 0, 3], [2, 3, 1, 0]), ([2, 3, 1, 0], [1, 2, 0, 3]), or ([3, 0, 2, 1], [0, 1, 3, 2])
-    optimal_0 = solution.sequence_pair.pair == ([0, 1, 3, 2], [3, 0, 2, 1]) and solution.floorplan.boundary_box == (8, 7.2)
-    optimal_1 = solution.sequence_pair.pair == ([1, 2, 0, 3], [2, 3, 1, 0]) and solution.floorplan.boundary_box == (8, 7.2)
-    optimal_2 = solution.sequence_pair.pair == ([2, 3, 1, 0], [1, 2, 0, 3]) and solution.floorplan.boundary_box == (8, 7.2)
-    optimal_3 = solution.sequence_pair.pair == ([3, 0, 2, 1], [0, 1, 3, 2]) and solution.floorplan.boundary_box == (8, 7.2)
+    optimal_0 = solution.sequence_pair.pair == ([0, 1, 3, 2], [3, 0, 2, 1]) and solution.floorplan.bounding_box == (8, 7.2)
+    optimal_1 = solution.sequence_pair.pair == ([1, 2, 0, 3], [2, 3, 1, 0]) and solution.floorplan.bounding_box == (8, 7.2)
+    optimal_2 = solution.sequence_pair.pair == ([2, 3, 1, 0], [1, 2, 0, 3]) and solution.floorplan.bounding_box == (8, 7.2)
+    optimal_3 = solution.sequence_pair.pair == ([3, 0, 2, 1], [0, 1, 3, 2]) and solution.floorplan.bounding_box == (8, 7.2)
     assert optimal_0 or optimal_1 or optimal_2 or optimal_3
 
     assert solution.floorplan.area == 57.6

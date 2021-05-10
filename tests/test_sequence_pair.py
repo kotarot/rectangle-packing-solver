@@ -50,8 +50,8 @@ def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizon
     assert isinstance(floorplan, rps.Floorplan)
     assert isinstance(floorplan.positions, list)
     assert len(floorplan.positions) == 4
-    assert isinstance(floorplan.boundary_box, tuple)
-    assert len(floorplan.boundary_box) == 2
+    assert isinstance(floorplan.bounding_box, tuple)
+    assert len(floorplan.bounding_box) == 2
     assert isinstance(floorplan.area, float)
 
     # Positions
@@ -71,8 +71,8 @@ def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizon
     assert math.isclose(floorplan.positions[3]["x"], 10.1)
     assert math.isclose(floorplan.positions[3]["y"], 0.0)
 
-    # Boundary box
-    assert floorplan.boundary_box == (11.1, 6.0)
+    # Bounding box
+    assert floorplan.bounding_box == (11.1, 6.0)
 
     # Area
     assert floorplan.area == 66.6
@@ -85,8 +85,8 @@ def test_sequence_pair_decode_vertically(example_problem, example_pair_verticall
     assert isinstance(floorplan, rps.Floorplan)
     assert isinstance(floorplan.positions, list)
     assert len(floorplan.positions) == 4
-    assert isinstance(floorplan.boundary_box, tuple)
-    assert len(floorplan.boundary_box) == 2
+    assert isinstance(floorplan.bounding_box, tuple)
+    assert len(floorplan.bounding_box) == 2
     assert isinstance(floorplan.area, float)
 
     # Positions
@@ -106,8 +106,8 @@ def test_sequence_pair_decode_vertically(example_problem, example_pair_verticall
     assert math.isclose(floorplan.positions[3]["x"], 0.0)
     assert math.isclose(floorplan.positions[3]["y"], 0.0)
 
-    # Boundary box
-    assert floorplan.boundary_box == (4.0, 18.2)
+    # Bounding box
+    assert floorplan.bounding_box == (4.0, 18.2)
 
     # Area
     assert floorplan.area == 72.8

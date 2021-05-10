@@ -28,7 +28,7 @@ def test_sequence_pair_init_horizontally(example_pair_horizontally):  # noqa: F8
     assert seqpair.n == 4
 
     assert seqpair.oblique_grid.grid == [[0, -1, -1, -1], [-1, 1, -1, -1], [-1, -1, 2, -1], [-1, -1, -1, 3]]
-    assert seqpair.oblique_grid.coordinates == [{"x": 0, "y": 0}, {"x": 1, "y": 1}, {"x": 2, "y": 2}, {"x": 3, "y": 3}]
+    assert seqpair.oblique_grid.coordinates == [{"a": 0, "b": 0}, {"a": 1, "b": 1}, {"a": 2, "b": 2}, {"a": 3, "b": 3}]
 
 
 def test_sequence_pair_init_vertically(example_pair_vertically):  # noqa: F811
@@ -40,7 +40,7 @@ def test_sequence_pair_init_vertically(example_pair_vertically):  # noqa: F811
     assert seqpair.n == 4
 
     assert seqpair.oblique_grid.grid == [[-1, -1, -1, 0], [-1, -1, 1, -1], [-1, 2, -1, -1], [3, -1, -1, -1]]
-    assert seqpair.oblique_grid.coordinates == [{"x": 0, "y": 3}, {"x": 1, "y": 2}, {"x": 2, "y": 1}, {"x": 3, "y": 0}]
+    assert seqpair.oblique_grid.coordinates == [{"a": 0, "b": 3}, {"a": 1, "b": 2}, {"a": 2, "b": 1}, {"a": 3, "b": 0}]
 
 
 def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizontally):  # noqa: F811

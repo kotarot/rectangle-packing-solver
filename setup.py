@@ -59,7 +59,7 @@ setuptools.setup(
     description="A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    keywords="python rectangle-packing placement optimization simulated-annealing",
+    keywords="python rectangle-packing placement floorplan solver optimization simulated-annealing sequence-pair",
     classifiers=[
         "Development Status :: 4 - Beta",
         "Intended Audience :: End Users/Desktop",

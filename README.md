@@ -1,6 +1,6 @@
 # rectangle-packing-solver
 
-`rectangle-packing-solver` is a solver to find a solution for the 2D rectangle packing problem by simulated annealing (SA) optimization.
+A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.
 Sequence-pair [1] is used to represent a rectangle placement (floorplan).
 
 ## Features

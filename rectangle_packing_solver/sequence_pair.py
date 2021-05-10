@@ -49,7 +49,7 @@ class SequencePair:
     def decode(self, problem: Problem, rotations: Optional[List] = None) -> Floorplan:
         """
         Decode:
-            Based on the sequence pair and the problem with rotations information, calculate a floorplan (boundary box, area, and rectangle positions).
+            Based on the sequence pair and the problem with rotations information, calculate a floorplan (bounding box, area, and rectangle positions).
         """
 
         if not isinstance(problem, Problem):
@@ -91,7 +91,7 @@ class SequencePair:
         topo_h = graphlib.TopologicalSorter(graph_h)
         torder_h = list(topo_h.static_order())
 
-        # Calculate W (boundary box width) from G_h
+        # Calculate W (bounding box width) from G_h
         dist_h = [width_wrot[i] for i in range(self.n)]
         for i in torder_h:
             dist_h[i] += max([dist_h[e] for e in graph_h[i]], default=0)
@@ -110,7 +110,7 @@ class SequencePair:
         topo_v = graphlib.TopologicalSorter(graph_v)
         torder_v = list(topo_v.static_order())
 
-        # Calculate H (boundary box height) from G_v
+        # Calculate H (bounding box height) from G_v
         dist_v = [height_wrot[i] for i in range(self.n)]
         for i in torder_v:
             dist_v[i] += max([dist_v[e] for e in graph_v[i]], default=0)
@@ -127,7 +127,7 @@ class SequencePair:
                 }
             )
 
-        return Floorplan(boundary_box=(bb_width, bb_height), positions=positions)
+        return Floorplan(bounding_box=(bb_width, bb_height), positions=positions)
 
     def encode(self) -> None:
         """

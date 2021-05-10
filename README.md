@@ -41,7 +41,7 @@ Output:
 ```plaintext
 problem: Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, {'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, {'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, {'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})
 solving...
-solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'boundary_box': (8, 7.2), 'area': 57.6})})
+solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'bounding_box': (8, 7.2), 'area': 57.6})})
 ```
 
 ## References

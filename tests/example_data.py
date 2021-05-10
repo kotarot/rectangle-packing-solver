@@ -19,7 +19,7 @@ import pytest
 def example_problem():
     rectangles = [
         [4, 6],
-        {"width": 4, "height": 4},
+        (4, 4),
         {"width": 2.1, "height": 3.2, "rotatable": False},
         {"width": 1, "height": 5, "rotatable": True},
     ]

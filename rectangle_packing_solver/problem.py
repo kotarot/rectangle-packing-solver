@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Union
+from typing import Dict, List, Tuple, Union
 
 
 class Problem:
@@ -20,7 +20,7 @@ class Problem:
     A class to represent a rectangle packing problem.
     """
 
-    def __init__(self, rectangles: List[Union[Dict, List]]) -> None:
+    def __init__(self, rectangles: List[Union[Dict, List, Tuple]]) -> None:
         self.rectangles = []
         self.n = 0
 
@@ -28,7 +28,7 @@ class Problem:
             raise TypeError("Invalid argument: 'rectangles' must be a list.")
 
         for r in rectangles:
-            if isinstance(r, list):
+            if isinstance(r, (list, tuple)):
                 self.rectangles.append(
                     {
                         "id": self.n,
@@ -47,7 +47,7 @@ class Problem:
                     }
                 )
             else:
-                raise TypeError("A rectangle must be a list or a dict.")
+                raise TypeError("A rectangle must be a list, tuple, or dict.")
 
             self.n += 1
 

@@ -21,9 +21,9 @@ import rectangle_packing_solver as rps
 
 # Define a problem
 problem = rps.Problem(rectangles=[
-    [4, 6],  # Format: [width, height]
-    {"width": 4, "height": 4},  # Or can be defined as dict. Default rotatable: False
-    {"width": 2.1, "height": 3.2, "rotatable": False},
+    [4, 6],  # Format: [width, height] as list. Default rotatable: False
+    (4, 4),  # Format: (width, height) as tuple. Default rotatable: False
+    {"width": 2.1, "height": 3.2, "rotatable": False},  # Or can be defined as dict.
     {"width": 1, "height": 5, "rotatable": True},
 ])
 print("problem:", problem)

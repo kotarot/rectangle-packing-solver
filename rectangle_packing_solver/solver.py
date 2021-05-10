@@ -75,13 +75,11 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         initial_energy = self.energy()
 
         # Choose two indices and swap them
-        i = random.randint(0, self.problem.n - 1)  # The first index
-        j = random.randint(0, self.problem.n - 1)  # The second index
+        i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
         offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
 
-        # Swap
-        if i != j:
-            self.state[i + offset], self.state[j + offset] = self.state[j + offset], self.state[i + offset]
+        # Swap them (i != j always holds true)
+        self.state[i + offset], self.state[j + offset] = self.state[j + offset], self.state[i + offset]
 
         # Random rotation
         if self.problem.rectangles[i]["rotatable"]:

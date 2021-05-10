@@ -84,7 +84,7 @@ class SequencePair:
         for i in range(self.n):
             for j in range(self.n):
                 # When j is right of i, set an edge from j to i
-                if (coords[i]["x"] < coords[j]["x"]) and (coords[i]["y"] < coords[j]["y"]):
+                if (coords[i]["a"] < coords[j]["a"]) and (coords[i]["b"] < coords[j]["b"]):
                     graph_h[j].append(i)
 
         # Topological order of DAG (G_h)
@@ -103,7 +103,7 @@ class SequencePair:
         for i in range(self.n):
             for j in range(self.n):
                 # When j is above i, set an edge from j to i
-                if (coords[i]["x"] > coords[j]["x"]) and (coords[i]["y"] < coords[j]["y"]):
+                if (coords[i]["a"] > coords[j]["a"]) and (coords[i]["b"] < coords[j]["b"]):
                     graph_v[j].append(i)
 
         # Topological order of DAG (G_v)
@@ -151,14 +151,14 @@ class SequencePair:
 
         # Oblique grid is basically an n x n 2d array
         grid = [[-1 for _ in range(n)] for _ in range(n)]
-        coordinates = [{"x": -1, "y": -1} for _ in range(n)]
+        coordinates = [{"a": -1, "b": -1} for _ in range(n)]
 
         # This time complexity is O(n^2), may be optimized...
         for i in range(n):
             index_p = gp.index(i)
             index_n = gn.index(i)
             grid[index_p][index_n] = i
-            coordinates[i] = {"x": index_p, "y": index_n}
+            coordinates[i] = {"a": index_p, "b": index_n}
 
         return ObliqueGrid(grid=grid, coordinates=coordinates)
 

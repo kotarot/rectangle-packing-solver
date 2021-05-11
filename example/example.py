@@ -32,7 +32,6 @@ def main():
 
     # Get a solver
     solver = rps.Solver()
-    print("solving...")
 
     # Find a solution
     solution = solver.solve(problem)

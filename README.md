@@ -46,6 +46,12 @@ print("solution:", solution)
 
 # Visualization (to floorplan.png)
 rps.Visualizer().visualize(solution=solution, path="./floorplan.png")
+
+# [Other Usages]
+# We can also give a solution width (and/or height) limit
+solution = rps.Solver().solve(problem=problem, height_limit=6.5)
+print("solution (with limit):", solution)
+rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_limit.png")
 ```
 
 ### Output:
@@ -53,6 +59,7 @@ rps.Visualizer().visualize(solution=solution, path="./floorplan.png")
 ```plaintext
 problem: Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, {'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, {'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, {'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})
 solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'bounding_box': (8, 7.2), 'area': 57.6})})
+solution (with limit): Solution({'sequence_pair': SequencePair(([0, 1, 2, 3], [0, 3, 1, 2])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 0, 'width': 4, 'height': 6}, {'id': 1, 'x': 4, 'y': 1, 'width': 4, 'height': 4}, {'id': 2, 'x': 8.0, 'y': 1.0, 'width': 2.1, 'height': 3.2}, {'id': 3, 'x': 4, 'y': 0, 'width': 5, 'height': 1}], 'bounding_box': (10.1, 6), 'area': 60.599999999999994})})
 ```
 
 ### Floorplan (example):
@@ -61,7 +68,7 @@ solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])),
 
 ### Floorplan (larger example):
 
-![floorplan_large](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_large.png)
+![floorplan_large](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_large_limit.png)
 
 ## References
 

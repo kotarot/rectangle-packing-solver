@@ -17,7 +17,7 @@ import random
 import signal
 import sys
 from contextlib import redirect_stderr
-from typing import List, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
 import simanneal
 
@@ -41,7 +41,7 @@ class Solver:
     def __init__(self) -> None:
         pass
 
-    def solve(self, problem: Problem, simanneal_minutes: float = 0.1, simanneal_steps: int = 100) -> Solution:
+    def solve(self, problem: Problem, width_limit: Optional[float] = None, height_limit: Optional[float] = None, simanneal_minutes: float = 0.1, simanneal_steps: int = 100) -> Solution:
         if not isinstance(problem, Problem):
             raise TypeError("Invalid argument: 'problem' must be an instance of Problem.")
 
@@ -52,7 +52,7 @@ class Solver:
         init_state = init_gp + init_gn + init_rot
 
         # Get rid of output (stderr) from simanneal in this "with" block
-        rpp = RectanglePackingProblemAnnealer(state=init_state, problem=problem)
+        rpp = RectanglePackingProblemAnnealer(state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit)
         signal.signal(signal.SIGINT, exit_handler)
         with redirect_stderr(open(os.devnull, "w")):
             rpp.copy_strategy = "slice"  # We use "slice" since the state is a list
@@ -72,9 +72,15 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
     Annealer for the rectangle packing problem.
     """
 
-    def __init__(self, state: List[int], problem: Problem) -> None:
+    def __init__(self, state: List[int], problem: Problem, width_limit: Optional[float] = None, height_limit: Optional[float] = None) -> None:
         self.seqpair = SequencePair()
         self.problem = problem
+        self.width_limit = sys.float_info.max
+        if width_limit:
+            self.width_limit = width_limit
+        self.height_limit = sys.float_info.max
+        if height_limit:
+            self.height_limit = height_limit
         super(RectanglePackingProblemAnnealer, self).__init__(state)
 
     def move(self) -> Union[int, float]:
@@ -83,20 +89,30 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         """
 
         initial_energy = self.energy()
+        initial_state = self.state[:]
 
-        # Choose two indices and swap them
-        i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
-        offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
+        while True:
+            # Choose two indices and swap them
+            i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
+            offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
 
-        # Swap them (i != j always holds true)
-        self.state[i + offset], self.state[j + offset] = self.state[j + offset], self.state[i + offset]
+            # Swap them (i != j always holds true)
+            self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]
 
-        # Random rotation
-        if self.problem.rectangles[i]["rotatable"]:
-            if random.randint(0, 1) == 1:
-                self.state[i + 2 * self.problem.n] += 1
+            # Random rotation
+            if self.problem.rectangles[i]["rotatable"]:
+                if random.randint(0, 1) == 1:
+                    self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1
 
-        return self.energy() - initial_energy
+            # We adopt solution if the solution width/height limit is satisfied
+            energy = self.energy()
+            if energy < sys.float_info.max:
+                break
+
+            # Restore the state
+            self.state = initial_state[:]
+
+        return energy - initial_energy
 
     def energy(self) -> Union[int, float]:
         """
@@ -107,6 +123,12 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         gp, gn, rotations = self.retrieve_pairs(n=self.problem.n, state=self.state)
         seqpair = SequencePair(pair=(gp, gn))
         floorplan = seqpair.decode(problem=self.problem, rotations=rotations)
+
+        # Returns float max, if width/height limit is not satisfied
+        if floorplan.bounding_box[0] > self.width_limit:
+            return sys.float_info.max
+        if floorplan.bounding_box[1] > self.height_limit:
+            return sys.float_info.max
 
         return floorplan.area
 

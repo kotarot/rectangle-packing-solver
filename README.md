@@ -57,11 +57,11 @@ solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])),
 
 ### Floorplan (example):
 
-![floorplan_example](./figs/floorplan_example.png)
+![floorplan_example](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_example.png)
 
 ### Floorplan (larger example):
 
-![floorplan_large](./figs/floorplan_large.png)
+![floorplan_large](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_large.png)
 
 ## References
 

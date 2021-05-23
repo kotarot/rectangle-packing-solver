@@ -41,7 +41,14 @@ class Solver:
     def __init__(self) -> None:
         pass
 
-    def solve(self, problem: Problem, width_limit: Optional[float] = None, height_limit: Optional[float] = None, simanneal_minutes: float = 0.1, simanneal_steps: int = 100) -> Solution:
+    def solve(
+        self,
+        problem: Problem,
+        width_limit: Optional[float] = None,
+        height_limit: Optional[float] = None,
+        simanneal_minutes: float = 0.1,
+        simanneal_steps: int = 100,
+    ) -> Solution:
         if not isinstance(problem, Problem):
             raise TypeError("Invalid argument: 'problem' must be an instance of Problem.")
 

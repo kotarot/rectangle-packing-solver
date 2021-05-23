@@ -7,6 +7,7 @@
 [![Codecov branch](https://img.shields.io/codecov/c/gh/kotarot/rectangle-packing-solver/main?flag=unittests&style=flat-square)](https://codecov.io/gh/kotarot/rectangle-packing-solver)
 [![GitHub](https://img.shields.io/github/license/kotarot/rectangle-packing-solver?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver/blob/main/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver?ref=badge_shield)
 
 A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.
 Sequence-pair [1] is used to represent a rectangle placement (floorplan).
@@ -66,3 +67,7 @@ solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])),
 ## References
 
 [1] H. Murata, K. Fujiyoshi, S. Nakatake, and Y. Kajitani, "VLSI module placement based on rectangle-packing by the sequence-pair," *IEEE Trans. on Computer-Aided Design of Integrated Circuits and Systems*, vol. 15, no. 12, pp. 1518--1524, Dec 1996.
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver?ref=badge_large)

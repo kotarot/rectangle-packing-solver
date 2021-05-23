@@ -1,16 +1,16 @@
 # rectangle-packing-solver
 
-[![PyPI](https://img.shields.io/pypi/v/rectangle-packing-solver?style=flat-square)](https://pypi.org/project/rectangle-packing-solver/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rectangle-packing-solver?style=flat-square)](https://pypi.org/project/rectangle-packing-solver/)
-[![GitHub repo size](https://img.shields.io/github/repo-size/kotarot/rectangle-packing-solver?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kotarot/rectangle-packing-solver/ci?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver/actions?query=workflow%3Aci)
-[![Codecov branch](https://img.shields.io/codecov/c/gh/kotarot/rectangle-packing-solver/main?flag=unittests&style=flat-square)](https://codecov.io/gh/kotarot/rectangle-packing-solver)
-[![GitHub](https://img.shields.io/github/license/kotarot/rectangle-packing-solver?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver/blob/main/LICENSE)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+[![PyPI](https://img.shields.io/pypi/v/rectangle-packing-solver)](https://pypi.org/project/rectangle-packing-solver/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rectangle-packing-solver)](https://pypi.org/project/rectangle-packing-solver/)
+[![GitHub repo size](https://img.shields.io/github/repo-size/kotarot/rectangle-packing-solver)](https://github.com/kotarot/rectangle-packing-solver)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kotarot/rectangle-packing-solver/ci)](https://github.com/kotarot/rectangle-packing-solver/actions?query=workflow%3Aci)
+[![Codecov branch](https://img.shields.io/codecov/c/gh/kotarot/rectangle-packing-solver/main?flag=unittests)](https://codecov.io/gh/kotarot/rectangle-packing-solver)
+[![GitHub](https://img.shields.io/github/license/kotarot/rectangle-packing-solver)](https://github.com/kotarot/rectangle-packing-solver/blob/main/LICENSE)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver?ref=badge_shield)
 
 A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.
 Sequence-pair [1] is used to represent a rectangle placement (floorplan).
+
 
 ## Features
 
@@ -19,11 +19,13 @@ Sequence-pair [1] is used to represent a rectangle placement (floorplan).
 - A rectangle can rotate while optimizing.
 - The built-in visualizer visualizes a floorplan solution.
 
+
 ## Installation
 
 ```bash
 pip install rectangle-packing-solver
 ```
+
 
 ## Example Usage
 
@@ -70,6 +72,7 @@ solution (with limit): Solution({'sequence_pair': SequencePair(([0, 1, 2, 3], [0
 ### Floorplan (larger example):
 
 ![floorplan_large](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_large_limit.png)
+
 
 ## References
 

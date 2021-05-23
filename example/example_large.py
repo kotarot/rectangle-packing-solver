@@ -27,8 +27,13 @@ def main():
     solution = rps.Solver().solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500)
     print("solution:", solution)
 
-    # Visualization (to floorplan.png)
+    # Visualization (to floorplan_large.png)
     rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_large.png")
+
+    # Find a solution (with limit)
+    solution = rps.Solver().solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500, height_limit=50.0)
+    print("solution (with limit):", solution)
+    rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_large_limit.png")
 
 
 if __name__ == "__main__":

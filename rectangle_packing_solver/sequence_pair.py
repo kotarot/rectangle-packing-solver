@@ -124,6 +124,8 @@ class SequencePair:
                     "id": i,
                     "x": dist_h[i] - width_wrot[i],  # distance from left edge
                     "y": dist_v[i] - height_wrot[i],  # distande from bottom edge
+                    "width": width_wrot[i],
+                    "height": height_wrot[i],
                 }
             )
 

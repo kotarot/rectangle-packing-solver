@@ -58,18 +58,26 @@ def test_sequence_pair_decode_horizontally(example_problem, example_pair_horizon
     assert floorplan.positions[0]["id"] == 0
     assert math.isclose(floorplan.positions[0]["x"], 0.0)
     assert math.isclose(floorplan.positions[0]["y"], 0.0)
+    assert math.isclose(floorplan.positions[0]["width"], 4.0)
+    assert math.isclose(floorplan.positions[0]["height"], 6.0)
 
     assert floorplan.positions[1]["id"] == 1
     assert math.isclose(floorplan.positions[1]["x"], 4.0)
     assert math.isclose(floorplan.positions[1]["y"], 0.0)
+    assert math.isclose(floorplan.positions[1]["width"], 4.0)
+    assert math.isclose(floorplan.positions[1]["height"], 4.0)
 
     assert floorplan.positions[2]["id"] == 2
     assert math.isclose(floorplan.positions[2]["x"], 8.0)
     assert math.isclose(floorplan.positions[2]["y"], 0.0)
+    assert math.isclose(floorplan.positions[2]["width"], 2.1)
+    assert math.isclose(floorplan.positions[2]["height"], 3.2)
 
     assert floorplan.positions[3]["id"] == 3
     assert math.isclose(floorplan.positions[3]["x"], 10.1)
     assert math.isclose(floorplan.positions[3]["y"], 0.0)
+    assert math.isclose(floorplan.positions[3]["width"], 1.0)
+    assert math.isclose(floorplan.positions[3]["height"], 5.0)
 
     # Bounding box
     assert floorplan.bounding_box == (11.1, 6.0)
@@ -93,18 +101,26 @@ def test_sequence_pair_decode_vertically(example_problem, example_pair_verticall
     assert floorplan.positions[0]["id"] == 0
     assert math.isclose(floorplan.positions[0]["x"], 0.0)
     assert math.isclose(floorplan.positions[0]["y"], 12.2)
+    assert math.isclose(floorplan.positions[0]["width"], 4.0)
+    assert math.isclose(floorplan.positions[0]["height"], 6.0)
 
     assert floorplan.positions[1]["id"] == 1
     assert math.isclose(floorplan.positions[1]["x"], 0.0)
     assert math.isclose(floorplan.positions[1]["y"], 8.2)
+    assert math.isclose(floorplan.positions[1]["width"], 4.0)
+    assert math.isclose(floorplan.positions[1]["height"], 4.0)
 
     assert floorplan.positions[2]["id"] == 2
     assert math.isclose(floorplan.positions[2]["x"], 0.0)
     assert math.isclose(floorplan.positions[2]["y"], 5.0)
+    assert math.isclose(floorplan.positions[2]["width"], 2.1)
+    assert math.isclose(floorplan.positions[2]["height"], 3.2)
 
     assert floorplan.positions[3]["id"] == 3
     assert math.isclose(floorplan.positions[3]["x"], 0.0)
     assert math.isclose(floorplan.positions[3]["y"], 0.0)
+    assert math.isclose(floorplan.positions[3]["width"], 1.0)
+    assert math.isclose(floorplan.positions[3]["height"], 5.0)
 
     # Bounding box
     assert floorplan.bounding_box == (4.0, 18.2)

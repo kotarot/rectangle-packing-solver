@@ -26,7 +26,7 @@ from .sequence_pair import SequencePair
 from .solution import Solution
 
 
-def exit_handler(signum, frame):
+def exit_handler(signum, frame) -> None:  # type: ignore
     """
     Since `simaaneal` traps SIGINT, we override it.
     """

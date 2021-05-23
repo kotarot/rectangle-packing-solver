@@ -107,3 +107,7 @@ jobs:
     # example
     - name: Run example/example.py
       run: python example/example.py
+
+    # benchmark
+    - name: Run example/benchmark.py
+      run: python example/benchmark.py

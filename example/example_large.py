@@ -24,7 +24,7 @@ def main():
     print("problem:", problem)
 
     # Find a solution
-    solution = rps.Solver().solve(problem=problem)
+    solution = rps.Solver().solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500)
     print("solution:", solution)
 
     # Visualization (to floorplan.png)

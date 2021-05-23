@@ -105,8 +105,6 @@ jobs:
       run: pip list
 
     # example
-    - name: Prepare figs directory
-      run: mkdir figs
     - name: Run example/example.py
       run: python example/example.py
     - name: Run example/example_large.py

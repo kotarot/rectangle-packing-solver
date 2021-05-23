@@ -1,5 +1,13 @@
 # rectangle-packing-solver
 
+[![PyPI](https://img.shields.io/pypi/v/rectangle-packing-solver?style=flat-square)](https://pypi.org/project/rectangle-packing-solver/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rectangle-packing-solver?style=flat-square)](https://pypi.org/project/rectangle-packing-solver/)
+[![GitHub repo size](https://img.shields.io/github/repo-size/kotarot/rectangle-packing-solver?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kotarot/rectangle-packing-solver/ci?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver/actions?query=workflow%3Aci)
+[![Codecov branch](https://img.shields.io/codecov/c/gh/kotarot/rectangle-packing-solver/main?flag=unittests&style=flat-square)](https://codecov.io/gh/kotarot/rectangle-packing-solver)
+[![GitHub](https://img.shields.io/github/license/kotarot/rectangle-packing-solver?style=flat-square)](https://github.com/kotarot/rectangle-packing-solver/blob/main/LICENSE)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=flat-square)](https://github.com/psf/black)
+
 A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.
 Sequence-pair [1] is used to represent a rectangle placement (floorplan).
 
@@ -49,11 +57,11 @@ solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])),
 
 ### Floorplan (example):
 
-![floorplan_example](./figs/floorplan_example.png)
+![floorplan_example](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_example.png)
 
 ### Floorplan (larger example):
 
-![floorplan_large](./figs/floorplan_large.png)
+![floorplan_large](https://raw.githubusercontent.com/kotarot/rectangle-packing-solver/main/figs/floorplan_large.png)
 
 ## References
 

@@ -5,7 +5,10 @@ Sequence-pair [1] is used to represent a rectangle placement (floorplan).
 
 ## Features
 
-- TBA
+- Solution quality and execution time are tunable, since the solver is SA-based.
+- Not only integers but also real numbers can be set as a rectangle width and height.
+- A rectangle can rotate while optimizing.
+- The built-in visualizer visualizes a floorplan solution.
 
 ## Installation
 
@@ -15,7 +18,8 @@ pip install rectangle-packing-solver
 
 ## Example Usage
 
-Sample code:
+### Sample code:
+
 ```python
 import rectangle_packing_solver as rps
 
@@ -28,19 +32,28 @@ problem = rps.Problem(rectangles=[
 ])
 print("problem:", problem)
 
-# Get a solver
-solver = rps.Solver()
-
 # Find a solution
-solution = solver.solve(problem)
+solution = rpm.Solver().solve(problem=problem)
 print("solution:", solution)
+
+# Visualization (to floorplan.png)
+rps.Visualizer().visualize(solution=solution, path="./floorplan.png")
 ```
 
-Output:
+### Output:
+
 ```plaintext
 problem: Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, {'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, {'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, {'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})
 solution: Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'bounding_box': (8, 7.2), 'area': 57.6})})
 ```
+
+### Floorplan (example):
+
+![floorplan_example](./figs/floorplan_example.png)
+
+### Floorplan (larger example):
+
+![floorplan_large](./figs/floorplan_large.png)
 
 ## References
 

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
 # Copyright 2021 Kotaro Terada
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +15,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Classes
-from .problem import Problem
-from .solution import Solution
-from .sequence_pair import SequencePair
-from .floorplan import Floorplan
+import rectangle_packing_solver as rps
 
-# Solvers
-from .solver import Solver
 
-# Visualizers
-from .visualizer import Visualizer
+def main():
+    # Define a problem
+    problem = rps.Problem(rectangles=[(0.1 * i, 0.1 * i) for i in range(100, 200, 5)])
+    print("problem:", problem)
 
-from .__version__ import __version__, __version_info__
+    # Find a solution
+    solution = rps.Solver().solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500)
+    print("solution:", solution)
 
-__all__ = ["Problem", "Solution", "SequencePair", "Floorplan", "Solver", "Visualizer", "__version__", "__version_info__"]
+    # Visualization (to floorplan.png)
+    rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_large.png")
+
+
+if __name__ == "__main__":
+    main()

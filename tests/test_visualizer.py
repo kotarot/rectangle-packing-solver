@@ -12,18 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Classes
-from .problem import Problem
-from .solution import Solution
-from .sequence_pair import SequencePair
-from .floorplan import Floorplan
+import mimetypes
 
-# Solvers
-from .solver import Solver
+from example_data import example_problem  # noqa: F401
 
-# Visualizers
-from .visualizer import Visualizer
+import rectangle_packing_solver as rps
 
-from .__version__ import __version__, __version_info__
 
-__all__ = ["Problem", "Solution", "SequencePair", "Floorplan", "Solver", "Visualizer", "__version__", "__version_info__"]
+def test_visualizer(example_problem):  # noqa: F811
+    problem = rps.Problem(rectangles=example_problem)
+    solver = rps.Solver()
+    solution = solver.solve(problem=problem, simanneal_minutes=0.01, simanneal_steps=10)
+
+    rps.Visualizer().visualize(solution=solution, path="./floorplan.png")
+
+    mimetype = mimetypes.guess_type("./floorplan.png")[0]
+    assert mimetype == "image/png"

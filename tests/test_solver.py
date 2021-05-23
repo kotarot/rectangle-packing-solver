@@ -20,7 +20,7 @@ import rectangle_packing_solver as rps
 def test_solver(example_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_problem)
     solver = rps.Solver()
-    solution = solver.solve(problem)
+    solution = solver.solve(problem=problem)
 
     assert isinstance(solution, rps.Solution)
     assert isinstance(solution.sequence_pair, rps.SequencePair)

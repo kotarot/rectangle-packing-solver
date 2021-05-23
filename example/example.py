@@ -30,12 +30,12 @@ def main():
     )
     print("problem:", problem)
 
-    # Get a solver
-    solver = rps.Solver()
-
     # Find a solution
-    solution = solver.solve(problem)
+    solution = rps.Solver().solve(problem=problem)
     print("solution:", solution)
+
+    # Visualization (to floorplan.png)
+    rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_example.png")
 
 
 if __name__ == "__main__":

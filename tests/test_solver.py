@@ -34,3 +34,18 @@ def test_solver(example_problem):  # noqa: F811
     assert optimal_0 or optimal_1 or optimal_2 or optimal_3
 
     assert solution.floorplan.area == 57.6
+    assert solution.floorplan.bounding_box[0] * solution.floorplan.bounding_box[1] == solution.floorplan.area
+
+
+def test_solver_with_width_limit(example_problem):  # noqa: F811
+    problem = rps.Problem(rectangles=example_problem)
+    solver = rps.Solver()
+    solution = solver.solve(problem=problem, width_limit=6.5)
+    assert solution.floorplan.bounding_box[0] <= 6.5
+
+
+def test_solver_with_height_limit(example_problem):  # noqa: F811
+    problem = rps.Problem(rectangles=example_problem)
+    solver = rps.Solver()
+    solution = solver.solve(problem=problem, height_limit=6.5)
+    assert solution.floorplan.bounding_box[1] <= 6.5

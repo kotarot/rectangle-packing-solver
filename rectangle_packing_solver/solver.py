@@ -14,6 +14,8 @@
 
 import os
 import random
+import signal
+import sys
 from contextlib import redirect_stderr
 from typing import List, Tuple, Union
 
@@ -22,6 +24,13 @@ import simanneal
 from .problem import Problem
 from .sequence_pair import SequencePair
 from .solution import Solution
+
+
+def exit_handler(signum, frame) -> None:  # type: ignore
+    """
+    Since `simaaneal` traps SIGINT, we override it.
+    """
+    sys.exit(1)
 
 
 class Solver:
@@ -44,6 +53,7 @@ class Solver:
 
         # Get rid of output (stderr) from simanneal in this "with" block
         rpp = RectanglePackingProblemAnnealer(state=init_state, problem=problem)
+        signal.signal(signal.SIGINT, exit_handler)
         with redirect_stderr(open(os.devnull, "w")):
             rpp.copy_strategy = "slice"  # We use "slice" since the state is a list
             rpp.set_schedule(rpp.auto(minutes=simanneal_minutes, steps=simanneal_steps))

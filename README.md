@@ -5,7 +5,10 @@ Sequence-pair [1] is used to represent a rectangle placement (floorplan).
 
 ## Features
 
-- TBA
+- Solution quality and execution time are tunable, since the solver is SA-based.
+- Not only integers but also real numbers can be set as a rectangle width and height.
+- A rectangle can rotate while optimizing.
+- The built-in visualizer visualizes a floorplan solution.
 
 ## Installation
 

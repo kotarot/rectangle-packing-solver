@@ -37,11 +37,13 @@ class Visualizer:
         bounding_box = solution.floorplan.bounding_box
 
         # Figure settings
-        fig = plt.figure(figsize=(10, 10))
+        bb_width = bounding_box[0]
+        bb_height = bounding_box[1]
+        fig = plt.figure(figsize=(10, 10 * bb_height / bb_width + 0.5))
         ax = plt.axes()
         ax.set_aspect("equal")
-        plt.xlim([0, bounding_box[0]])
-        plt.ylim([0, bounding_box[1]])
+        plt.xlim([0, bb_width])
+        plt.ylim([0, bb_height])
         plt.xlabel("X")
         plt.ylabel("Y")
         plt.title(title)
@@ -62,8 +64,8 @@ class Visualizer:
 
             # Add text label
             centering_offset = 0.011
-            center_x = rectangle["x"] + rectangle["width"] / 2 - bounding_box[0] * centering_offset
-            center_y = rectangle["y"] + rectangle["height"] / 2 - bounding_box[1] * centering_offset
+            center_x = rectangle["x"] + rectangle["width"] / 2 - bb_width * centering_offset
+            center_y = rectangle["y"] + rectangle["height"] / 2 - bb_height * centering_offset
             ax.text(x=center_x, y=center_y, s=rectangle["id"], fontsize=18, color=fontcolor)
 
         # Output

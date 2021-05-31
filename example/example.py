@@ -41,7 +41,7 @@ def main():
     # We can also give a solution width (and/or height) limit
     solution = rps.Solver().solve(problem=problem, height_limit=6.5)
     print("solution (with limit):", solution)
-    rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_limit.png")
+    rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_example_limit.png")
 
 
 if __name__ == "__main__":

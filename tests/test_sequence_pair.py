@@ -14,7 +14,7 @@
 
 import math
 
-from example_data import example_pair_horizontally, example_pair_vertically, example_problem  # noqa: F401
+from tests.example_data import example_pair_horizontally, example_pair_vertically, example_problem  # noqa: F401
 
 import rectangle_packing_solver as rps
 

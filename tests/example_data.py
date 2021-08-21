@@ -42,3 +42,20 @@ def example_pair_vertically():
     gn = [3, 2, 1, 0]
     pair = (gp, gn)
     return pair
+
+
+@pytest.fixture
+def example_pair():
+    gp = [0, 1, 3, 2]
+    gn = [3, 0, 2, 1]
+    pair = (gp, gn)
+    return pair
+
+
+@pytest.fixture
+def example_floorplan():
+    return {
+        'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}],
+        'bounding_box': (8, 7.2),
+        'area': 57.6,
+    }

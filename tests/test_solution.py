@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import pytest
-from tests.example_data import example_pair, example_floorplan  # noqa: F401
 
 import rectangle_packing_solver as rps
+from tests.example_data import example_floorplan, example_pair  # noqa: F401
 
 
 def test_solution_init_invalid_sequence_pair(example_floorplan):  # noqa: F811
@@ -44,4 +44,8 @@ def test_solution_str(example_pair, example_floorplan):  # noqa: F811
     solution = rps.Solution(sequence_pair=seqpair, floorplan=floorplan)
 
     assert isinstance(solution.__str__(), str)
-    assert "Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'bounding_box': (8, 7.2), 'area': 57.6})})" in solution.__str__()
+    assert (
+        "Solution({'sequence_pair': SequencePair(([0, 1, 3, 2], [3, 0, 2, 1])), 'floorplan': Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, "
+        "{'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'bounding_box': (8, 7.2), 'area': 57.6})})"
+        in solution.__str__()
+    )

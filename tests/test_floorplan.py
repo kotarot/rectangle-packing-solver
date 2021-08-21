@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tests.example_data import example_floorplan  # noqa: F401
-
 import rectangle_packing_solver as rps
+from tests.example_data import example_floorplan  # noqa: F401
 
 
 def test_floorplan_init_with_area(example_floorplan):  # noqa: F811
@@ -47,4 +46,7 @@ def test_floorplan_str(example_floorplan):  # noqa: F811
     )
 
     assert isinstance(floorplan.__str__(), str)
-    assert "Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], 'bounding_box': (8, 7.2), 'area': 57.6})" in floorplan.__str__()
+    assert (
+        "Floorplan({'positions': [{'id': 0, 'x': 0, 'y': 1}, {'id': 1, 'x': 4, 'y': 3.2}, {'id': 2, 'x': 5.0, 'y': 0.0}, {'id': 3, 'x': 0, 'y': 0}], "
+        "'bounding_box': (8, 7.2), 'area': 57.6})" in floorplan.__str__()
+    )

@@ -13,9 +13,9 @@
 # limitations under the License.
 
 import pytest
-from tests.example_data import example_problem  # noqa: F401
 
 import rectangle_packing_solver as rps
+from tests.example_data import example_problem  # noqa: F401
 
 
 def test_problem_init(example_problem):  # noqa: F811
@@ -61,4 +61,7 @@ def test_problem_str(example_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_problem)
 
     assert isinstance(problem.__str__(), str)
-    assert "Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, {'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, {'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, {'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})" in problem.__str__()
+    assert (
+        "Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, {'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, "
+        "{'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, {'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})" in problem.__str__()
+    )

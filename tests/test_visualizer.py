@@ -14,9 +14,8 @@
 
 import mimetypes
 
-from tests.example_data import example_problem  # noqa: F401
-
 import rectangle_packing_solver as rps
+from tests.example_data import example_problem  # noqa: F401
 
 
 def test_visualizer(example_problem):  # noqa: F811

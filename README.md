@@ -2,10 +2,10 @@
 
 [![PyPI](https://img.shields.io/pypi/v/rectangle-packing-solver)](https://pypi.org/project/rectangle-packing-solver/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/rectangle-packing-solver)](https://pypi.org/project/rectangle-packing-solver/)
-[![GitHub repo size](https://img.shields.io/github/repo-size/kotarot/rectangle-packing-solver)](https://github.com/kotarot/rectangle-packing-solver)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kotarot/rectangle-packing-solver/ci)](https://github.com/kotarot/rectangle-packing-solver/actions?query=workflow%3Aci)
+[![GitHub Repo Size](https://img.shields.io/github/repo-size/kotarot/rectangle-packing-solver)](https://github.com/kotarot/rectangle-packing-solver)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/kotarot/rectangle-packing-solver/Continuous%20Integration)](https://github.com/kotarot/rectangle-packing-solver/actions?query=workflow%3AContinuous%20Integration)
 [![Codecov branch](https://img.shields.io/codecov/c/gh/kotarot/rectangle-packing-solver/main?flag=unittests)](https://codecov.io/gh/kotarot/rectangle-packing-solver)
-[![GitHub](https://img.shields.io/github/license/kotarot/rectangle-packing-solver)](https://github.com/kotarot/rectangle-packing-solver/blob/main/LICENSE)
+[![GitHub License](https://img.shields.io/github/license/kotarot/rectangle-packing-solver)](https://github.com/kotarot/rectangle-packing-solver/blob/main/LICENSE)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fkotarot%2Frectangle-packing-solver?ref=badge_shield)
 
 A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.

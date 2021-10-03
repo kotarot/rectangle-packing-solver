@@ -51,6 +51,7 @@ setuptools.setup(
             "black>=21.5b0,<22.0",
             "isort>=5.8.0,<6.0.0",
             "flake8>=3.9.1,<4.0.0",
+            "flake8-bugbear>=21.9.2,<22.0.0",
             "mypy>=0.812,<1.0",
         ],
     },

@@ -57,7 +57,8 @@ setuptools.setup(
     author="Kotaro Terada",
     author_email="kotarot@apache.org",
     url="https://github.com/kotarot/rectangle-packing-solver",
-    description="A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.",
+    description="A solver to find a solution of the 2D rectangle packing problem"
+    + " by simulated annealing (SA) optimization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords="python rectangle-packing placement floorplan solver optimization simulated-annealing sequence-pair",

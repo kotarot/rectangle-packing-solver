@@ -59,7 +59,9 @@ class Solver:
         init_state = init_gp + init_gn + init_rot
 
         # Get rid of output (stderr) from simanneal in this "with" block
-        rpp = RectanglePackingProblemAnnealer(state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit)
+        rpp = RectanglePackingProblemAnnealer(
+            state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit
+        )
         signal.signal(signal.SIGINT, exit_handler)
         with redirect_stderr(open(os.devnull, "w")):
             rpp.copy_strategy = "slice"  # We use "slice" since the state is a list
@@ -79,7 +81,13 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
     Annealer for the rectangle packing problem.
     """
 
-    def __init__(self, state: List[int], problem: Problem, width_limit: Optional[float] = None, height_limit: Optional[float] = None) -> None:
+    def __init__(
+        self,
+        state: List[int],
+        problem: Problem,
+        width_limit: Optional[float] = None,
+        height_limit: Optional[float] = None,
+    ) -> None:
         self.seqpair = SequencePair()
         self.problem = problem
         self.width_limit = sys.float_info.max
@@ -88,6 +96,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         self.height_limit = sys.float_info.max
         if height_limit:
             self.height_limit = height_limit
+        self.state: List[int] = []
         super(RectanglePackingProblemAnnealer, self).__init__(state)
 
     def move(self) -> Union[int, float]:
@@ -95,8 +104,8 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         Move state (sequence-pair) and return the energy diff.
         """
 
-        initial_energy = self.energy()
-        initial_state = self.state[:]  # type: ignore
+        initial_energy: float = self.energy()
+        initial_state: List[int] = self.state[:]
 
         while True:
             # Choose two indices and swap them
@@ -104,12 +113,12 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
             offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
 
             # Swap them (i != j always holds true)
-            self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]  # type: ignore
+            self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]
 
             # Random rotation
             if self.problem.rectangles[i]["rotatable"]:
                 if random.randint(0, 1) == 1:
-                    self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1  # type: ignore
+                    self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1
 
             # We adopt solution if the solution width/height limit is satisfied
             energy = self.energy()
@@ -145,6 +154,6 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         Retrieve G_{+}, G_{-}, and rotations from a state.
         """
         gp = state[0:n]
-        gn = state[n : 2 * n]  # noqa: E203
-        rotations = state[2 * n : 3 * n]  # noqa: E203
+        gn = state[n : 2 * n]
+        rotations = state[2 * n : 3 * n]
         return (gp, gn, rotations)

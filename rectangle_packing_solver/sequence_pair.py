@@ -49,7 +49,8 @@ class SequencePair:
     def decode(self, problem: Problem, rotations: Optional[List] = None) -> Floorplan:
         """
         Decode:
-            Based on the sequence pair and the problem with rotations information, calculate a floorplan (bounding box, area, and rectangle positions).
+            Based on the sequence pair and the problem with rotations information, calculate a floorplan
+            (bounding box, area, and rectangle positions).
         """
 
         if not isinstance(problem, Problem):

@@ -53,7 +53,7 @@ def test_solver_with_height_limit(example_problem):  # noqa: F811
 
 
 def test_solver_with_width_and_height_limit(example_problem):  # noqa: F811
-    # See PR #X for details.
+    # Note: See PR #23 for details.
     problem = rps.Problem(
         rectangles=[
             {"width": 5, "height": 7, "rotatable": True},

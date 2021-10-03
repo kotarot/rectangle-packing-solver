@@ -1,2 +1,36 @@
+# Formatter: black
 [tool.black]
-line-length = 160
+line-length = 119
+
+# Formatter: isort
+[tool.isort]
+profile = "black"
+line_length = 119
+
+# Type checker: mypy
+[tool.mypy]
+python_version = "3.9"
+# Config file
+warn_unused_configs = true
+# Target files
+files = "rectangle_packing_solver/*.py"
+# Import discovery
+ignore_missing_imports = true
+follow_imports = "silent"
+# Untyped definitions and calls
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+show_error_codes = true
+# Configuring warnings
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_return_any = true
+# warn_unreachable = true  # Will be enabled in the future.
+
+# Dependencies that don't have types.
+[[tool.mypy.overrides]]
+module = [
+    "simanneal",
+    "matplotlib"
+]
+ignore_missing_imports = true

@@ -92,8 +92,12 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         self.problem = problem
 
         # The max possible width and height to deal with the size limit.
-        self.max_possible_width = sum([max(r["width"], r["height"]) if r["rotatable"] else r["width"] for r in problem.rectangles])
-        self.max_possible_height = sum([max(r["width"], r["height"]) if r["rotatable"] else r["height"] for r in problem.rectangles])
+        self.max_possible_width = sum(
+            [max(r["width"], r["height"]) if r["rotatable"] else r["width"] for r in problem.rectangles]
+        )
+        self.max_possible_height = sum(
+            [max(r["width"], r["height"]) if r["rotatable"] else r["height"] for r in problem.rectangles]
+        )
 
         self.width_limit = sys.float_info.max
         if width_limit:

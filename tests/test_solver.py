@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import itertools
+
 import rectangle_packing_solver as rps
 from tests.example_data import example_problem  # noqa: F401
 
@@ -48,3 +50,21 @@ def test_solver_with_height_limit(example_problem):  # noqa: F811
     solver = rps.Solver()
     solution = solver.solve(problem=problem, height_limit=6.5)
     assert solution.floorplan.bounding_box[1] <= 6.5
+
+
+def test_solver_with_width_and_height_limit(example_problem):  # noqa: F811
+    # Note: See PR #23 for details.
+    problem = rps.Problem(
+        rectangles=[
+            {"width": 5, "height": 7, "rotatable": True},
+            {"width": 5, "height": 7, "rotatable": True},
+            {"width": 5, "height": 7, "rotatable": True},
+            {"width": 5, "height": 7, "rotatable": True},
+            {"width": 5, "height": 7, "rotatable": True},
+        ]
+    )
+    problem = rps.Problem(rectangles=example_problem)
+    for width_limit, height_limit in itertools.product([19, 17, 15], [17, 15, 13]):
+        solution = rps.Solver().solve(problem=problem, width_limit=width_limit, height_limit=height_limit)
+        assert solution.floorplan.bounding_box[0] <= width_limit
+        assert solution.floorplan.bounding_box[1] <= height_limit

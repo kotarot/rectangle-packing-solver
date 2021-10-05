@@ -17,7 +17,7 @@ import random
 import signal
 import sys
 from contextlib import redirect_stderr
-from typing import List, Optional, Tuple, Union
+from typing import List, Optional, Tuple
 
 import simanneal
 
@@ -90,6 +90,11 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
     ) -> None:
         self.seqpair = SequencePair()
         self.problem = problem
+
+        # The max possible width and height to deal with the size limit.
+        self.max_possible_width = sum([max(r["width"], r["height"]) if r["rotatable"] else r["width"] for r in problem.rectangles])
+        self.max_possible_height = sum([max(r["width"], r["height"]) if r["rotatable"] else r["height"] for r in problem.rectangles])
+
         self.width_limit = sys.float_info.max
         if width_limit:
             self.width_limit = width_limit
@@ -99,7 +104,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         self.state: List[int] = []
         super(RectanglePackingProblemAnnealer, self).__init__(state)
 
-    def move(self) -> Union[int, float]:
+    def move(self) -> float:
         """
         Move state (sequence-pair) and return the energy diff.
         """
@@ -107,30 +112,25 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         initial_energy: float = self.energy()
         initial_state: List[int] = self.state[:]
 
-        while True:
-            # Choose two indices and swap them
-            i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
-            offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
+        # Choose two indices and swap them
+        i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
+        offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
 
-            # Swap them (i != j always holds true)
-            self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]
+        # Swap them (i != j always holds true)
+        self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]
 
-            # Random rotation
-            if self.problem.rectangles[i]["rotatable"]:
-                if random.randint(0, 1) == 1:
-                    self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1
+        # Random rotation
+        if self.problem.rectangles[i]["rotatable"]:
+            if random.randint(0, 1) == 1:
+                self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1
 
-            # We adopt solution if the solution width/height limit is satisfied
-            energy = self.energy()
-            if energy < sys.float_info.max:
-                break
-
-            # Restore the state
-            self.state = initial_state[:]
+        # A solution whose width/height limit is not satisfied has a larger energy.
+        # We adopt a valid solution as the annealing steps proceeds.
+        energy = self.energy()
 
         return energy - initial_energy
 
-    def energy(self) -> Union[int, float]:
+    def energy(self) -> float:
         """
         Calculates the area of bounding box.
         """
@@ -140,16 +140,18 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
         seqpair = SequencePair(pair=(gp, gn))
         floorplan = seqpair.decode(problem=self.problem, rotations=rotations)
 
-        # Returns float max, if width/height limit is not satisfied
+        # Returns the max possible area, if width/height limit is not satisfied.
+        # This solution could be chosen in the earlier steps of the annealing,
+        # but would not be chosen in the later steps.
         if floorplan.bounding_box[0] > self.width_limit:
-            return sys.float_info.max
+            return self.max_possible_width * self.max_possible_height
         if floorplan.bounding_box[1] > self.height_limit:
-            return sys.float_info.max
+            return self.max_possible_width * self.max_possible_height
 
-        return floorplan.area
+        return float(floorplan.area)
 
     @classmethod
-    def retrieve_pairs(cls, n: int, state: List[int]) -> Tuple:
+    def retrieve_pairs(cls, n: int, state: List[int]) -> Tuple[List[int], List[int], List[int]]:
         """
         Retrieve G_{+}, G_{-}, and rotations from a state.
         """

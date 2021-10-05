@@ -47,22 +47,25 @@ setuptools.setup(
             # For test
             "pytest>=6.2.4,<7.0.0",
             "pytest-cov>=2.11.1,<3.0.0",
-            # For lint
+            # For formatter/linter/checker
             "black>=21.5b0,<22.0",
-            "flake8>=3.9.1,<4.0.0",
             "isort>=5.8.0,<6.0.0",
+            "flake8>=3.9.1,<4.0.0",
+            "flake8-bugbear>=21.9.2,<22.0.0",
             "mypy>=0.812,<1.0",
         ],
     },
     author="Kotaro Terada",
     author_email="kotarot@apache.org",
     url="https://github.com/kotarot/rectangle-packing-solver",
-    description="A solver to find a solution of the 2D rectangle packing problem by simulated annealing (SA) optimization.",
+    description="A solver to find a solution of the 2D rectangle packing problem"
+    + " by simulated annealing (SA) optimization.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords="python rectangle-packing placement floorplan solver optimization simulated-annealing sequence-pair",
     classifiers=[
         "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3.6",

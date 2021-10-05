@@ -23,8 +23,10 @@ import rectangle_packing_solver as rps
 
 def generate_rectangles(n=10, range_width=(1, 100), range_height=(1, 100)):
     rectangles = []
-    for i in range(n):
-        rectangles.append((random.randint(range_width[0], range_width[1]), random.randint(range_height[0], range_height[1])))
+    for _ in range(n):
+        rectangles.append(
+            (random.randint(range_width[0], range_width[1]), random.randint(range_height[0], range_height[1]))
+        )
     return rectangles
 
 

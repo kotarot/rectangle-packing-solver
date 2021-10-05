@@ -3,8 +3,8 @@ name: Continuous Integration
 on: [push]
 
 jobs:
-  lint:
-    name: 'Lint with black, flake8, isort, and mypy'
+  formatter-linter-checker:
+    name: 'Format, lint, and check codes'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -19,16 +19,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install ".[dev]"
-    - name: Lint with black
+    - name: black (formatter)
       run: black . --check --diff
-    - name: Lint with flake8
-      run: flake8 . --statistics --count --show-source
-    - name: Lint with isort
+    - name: isort (formatter)
       run: isort . --check-only --diff
-    - name: Check types with mypy
-      run: mypy rectangle_packing_solver
+    - name: flake8 (linter)
+      run: flake8 . --statistics --count --show-source
+    - name: mypy (type checker)
+      run: mypy
 
-  unit_tests:
+  unit-tests:
     name: 'Run unit tests'
     runs-on: ${{ matrix.os }}
     strategy:

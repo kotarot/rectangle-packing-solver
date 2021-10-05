@@ -12,11 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from .__version__ import __version__, __version_info__
+
 # Classes
-from .problem import Problem
-from .solution import Solution
-from .sequence_pair import SequencePair
 from .floorplan import Floorplan
+from .problem import Problem
+from .sequence_pair import SequencePair
+from .solution import Solution
 
 # Solvers
 from .solver import Solver
@@ -24,6 +26,13 @@ from .solver import Solver
 # Visualizers
 from .visualizer import Visualizer
 
-from .__version__ import __version__, __version_info__
-
-__all__ = ["Problem", "Solution", "SequencePair", "Floorplan", "Solver", "Visualizer", "__version__", "__version_info__"]
+__all__ = [
+    "__version__",
+    "__version_info__",
+    "Floorplan",
+    "Problem",
+    "SequencePair",
+    "Solution",
+    "Solver",
+    "Visualizer",
+]

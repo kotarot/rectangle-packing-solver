@@ -62,6 +62,8 @@ def test_problem_str(example_problem):  # noqa: F811
 
     assert isinstance(problem.__str__(), str)
     assert (
-        "Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, {'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, "
-        "{'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, {'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})" in problem.__str__()
+        "Problem({'n': 4, 'rectangles': [{'id': 0, 'width': 4, 'height': 6, 'rotatable': False}, "
+        "{'id': 1, 'width': 4, 'height': 4, 'rotatable': False}, "
+        "{'id': 2, 'width': 2.1, 'height': 3.2, 'rotatable': False}, "
+        "{'id': 3, 'width': 1, 'height': 5, 'rotatable': True}]})" in problem.__str__()
     )

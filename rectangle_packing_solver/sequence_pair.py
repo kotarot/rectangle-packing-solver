@@ -184,3 +184,13 @@ class SequencePair:
                     gn[y] = rectangle_id
 
         return (gp, gn)
+
+    ################################################################
+    # Operators
+    ################################################################
+
+    def __eq__(self, other):
+        return self.pair == other.pair
+
+    def __ne__(self, other):
+        return not self.__eq__(other)

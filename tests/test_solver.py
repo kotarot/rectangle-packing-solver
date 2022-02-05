@@ -135,3 +135,20 @@ def test_solver_with_tight_limits():
         solution = rps.Solver().solve(problem=problem, width_limit=width_limit, height_limit=height_limit)
         assert solution.floorplan.bounding_box[0] <= width_limit
         assert solution.floorplan.bounding_box[1] <= height_limit
+
+
+################################################################
+# Random seed
+################################################################
+
+
+def test_solver_random_seed(example_problem):  # noqa: F811
+    problem = rps.Problem(rectangles=example_problem)
+    solver = rps.Solver()
+    solution_1 = solver.solve(problem=problem, seed=1111)
+
+    solution_2 = solver.solve(problem=problem, seed=1111)
+    assert solution_1.sequence_pair == solution_2.sequence_pair
+
+    solution_3 = solver.solve(problem=problem, seed=3333)
+    assert solution_1.sequence_pair != solution_3.sequence_pair

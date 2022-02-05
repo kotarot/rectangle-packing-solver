@@ -27,6 +27,12 @@ def example_problem():
 
 
 @pytest.fixture
+def example_large_problem():
+    rectangles = [(0.1 * i, 0.1 * i) for i in range(100, 200, 5)]
+    return rectangles
+
+
+@pytest.fixture
 def example_pair_horizontally():
     # By this pair of sequences, all of the four rectangles are aligned in a strait line horizontally.
     gp = [0, 1, 2, 3]

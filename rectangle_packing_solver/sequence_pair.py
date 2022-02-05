@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import graphlib
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from .floorplan import Floorplan
 from .problem import Problem
@@ -189,8 +189,8 @@ class SequencePair:
     # Operators
     ################################################################
 
-    def __eq__(self, other):
+    def __eq__(self, other: Any) -> Any:
         return self.pair == other.pair
 
-    def __ne__(self, other):
+    def __ne__(self, other: Any) -> Any:
         return not self.__eq__(other)

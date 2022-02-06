@@ -31,6 +31,7 @@ def main():
     print("problem:", problem)
 
     # Find a solution
+    print("\n=== Solving without width/height constraints ===")
     solution = rps.Solver().solve(problem=problem)
     print("solution:", solution)
 
@@ -39,8 +40,9 @@ def main():
 
     # [Other Usages]
     # We can also give a solution width (and/or height) limit
-    solution = rps.Solver().solve(problem=problem, height_limit=6.5)
-    print("solution (with limit):", solution)
+    print("\n=== Solving with width/height constraints ===")
+    solution = rps.Solver().solve(problem=problem, height_limit=6.5, show_progress=True, seed=1111)
+    print("solution:", solution)
     rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_example_limit.png")
 
 

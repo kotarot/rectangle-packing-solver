@@ -61,6 +61,16 @@ def test_solver_with_height_limit(example_problem):  # noqa: F811
     assert solution.floorplan.bounding_box[1] <= 6.5
 
 
+def test_solver_progress_bar(example_problem, capfd):  # noqa: F811
+    problem = rps.Problem(rectangles=example_problem)
+    solver = rps.Solver()
+    _ = solver.solve(problem=problem, show_progress=True)
+
+    out, err = capfd.readouterr()
+    assert out == ""
+    assert "Progress: 100%" in err
+
+
 ################################################################
 # Large example
 ################################################################

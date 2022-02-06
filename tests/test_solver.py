@@ -12,8 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import itertools
-
 import pytest
 
 import rectangle_packing_solver as rps
@@ -71,26 +69,27 @@ def test_solver_with_height_limit(example_problem):  # noqa: F811
 def test_solver_example_large_problem(example_large_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_large_problem)
     solver = rps.Solver()
-    solution = solver.solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500)
+    solution = solver.solve(problem=problem, simanneal_minutes=0.2, simanneal_steps=200)
 
     assert isinstance(solution, rps.Solution)
     assert isinstance(solution.sequence_pair, rps.SequencePair)
     assert isinstance(solution.floorplan, rps.Floorplan)
 
+    # Not so bad solution
     assert solution.floorplan.area < 6000
 
 
 def test_solver_example_large_problem_with_width(example_large_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_large_problem)
     solver = rps.Solver()
-    solution = solver.solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500, width_limit=50.0)
+    solution = solver.solve(problem=problem, simanneal_minutes=0.2, simanneal_steps=200, width_limit=50.0)
     assert solution.floorplan.bounding_box[0] <= 50.0
 
 
 def test_solver_example_large_problem_with_height(example_large_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_large_problem)
     solver = rps.Solver()
-    solution = solver.solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500, height_limit=50.0)
+    solution = solver.solve(problem=problem, simanneal_minutes=0.2, simanneal_steps=200, height_limit=50.0)
     assert solution.floorplan.bounding_box[1] <= 50.0
 
 
@@ -120,7 +119,9 @@ def test_solver_with_invalid_height_limit(example_problem):  # noqa: F811
 ################################################################
 
 
-def test_solver_with_tight_limits():
+@pytest.mark.parametrize('width_limit', [19, 17, 15])
+@pytest.mark.parametrize('height_limit', [17, 15, 13])
+def test_solver_with_tight_limits(width_limit, height_limit):
     # Note: See PR #23 for details.
     problem = rps.Problem(
         rectangles=[
@@ -131,10 +132,9 @@ def test_solver_with_tight_limits():
             {"width": 5, "height": 7, "rotatable": True},
         ]
     )
-    for width_limit, height_limit in itertools.product([19, 17, 15], [17, 15, 13]):
-        solution = rps.Solver().solve(problem=problem, width_limit=width_limit, height_limit=height_limit)
-        assert solution.floorplan.bounding_box[0] <= width_limit
-        assert solution.floorplan.bounding_box[1] <= height_limit
+    solution = rps.Solver().solve(problem=problem, width_limit=width_limit, height_limit=height_limit)
+    assert solution.floorplan.bounding_box[0] <= width_limit
+    assert solution.floorplan.bounding_box[1] <= height_limit
 
 
 ################################################################
@@ -145,10 +145,10 @@ def test_solver_with_tight_limits():
 def test_solver_random_seed(example_problem):  # noqa: F811
     problem = rps.Problem(rectangles=example_problem)
     solver = rps.Solver()
-    solution_1 = solver.solve(problem=problem, seed=1111)
+    solution_1 = solver.solve(problem=problem, seed=111)
 
-    solution_2 = solver.solve(problem=problem, seed=1111)
+    solution_2 = solver.solve(problem=problem, seed=111)
     assert solution_1.sequence_pair == solution_2.sequence_pair
 
-    solution_3 = solver.solve(problem=problem, seed=3333)
+    solution_3 = solver.solve(problem=problem, seed=333)
     assert solution_1.sequence_pair != solution_3.sequence_pair

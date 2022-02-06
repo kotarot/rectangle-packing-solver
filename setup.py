@@ -40,6 +40,7 @@ setuptools.setup(
     install_requires=[
         "simanneal>=0.5.0,<1.0.0",
         "matplotlib>=3.3.4,<4.0.0",
+        "tqdm>=4.62.3,<5.0.0",
         "graphlib-backport>=1.0.3,<2.0.0",  # TODO: Drop this when we drop 3.8 support
     ],
     extras_require={

@@ -15,9 +15,10 @@
 import random
 import signal
 import sys
-from typing import List, Optional, Tuple
+from typing import Any, List, Optional, Tuple
 
 import simanneal
+from tqdm.auto import tqdm
 
 from .problem import Problem
 from .sequence_pair import SequencePair
@@ -46,6 +47,7 @@ class Solver:
         height_limit: Optional[float] = None,
         simanneal_minutes: float = 0.1,
         simanneal_steps: int = 100,
+        show_progress: bool = False,
         seed: Optional[int] = None,
     ) -> Solution:
         if seed:
@@ -56,8 +58,8 @@ class Solver:
 
         # If width/height limits are not given...
         if (width_limit is None) and (height_limit is None):
-            return self._solve_with_constraints_strategy(
-                problem, width_limit, height_limit, simanneal_minutes, simanneal_steps, constraints_strategy="soft"
+            return self._solve_with_strategy(
+                problem, width_limit, height_limit, None, simanneal_minutes, simanneal_steps, show_progress, strategy="hard"
             )
 
         # If width/height limits are given...
@@ -79,70 +81,62 @@ class Solver:
             )
 
         # If constraints of width and/or hight are given,
-        # we will use two kinds of annealer in a hybrid way.
-        # - 1) Soft constraints strategy:
-        #      Find a solution with smallest area as possible, the width/height limits may not be met.
-        # - 2) Hard constraints strategy:
+        # we can use two kinds of annealer in a hybrid way.
+        # - 1) Hard constraints strategy:
         #      Find a solution so that the width/height limits must be met. Sometimes no solutions will be found.
-        solution_soft = self._solve_with_constraints_strategy(
-            problem, width_limit, height_limit, simanneal_minutes, simanneal_steps, constraints_strategy="soft"
-        )
-        try:
-            solution_hard = self._solve_with_constraints_strategy(
-                problem, width_limit, height_limit, simanneal_minutes, simanneal_steps, constraints_strategy="hard"
+        # - 2) Soft constraints strategy:
+        #      Find a solution with smallest area as possible, the width/height limits may not be met.
+        if (width_limit < sys.float_info.max) and (height_limit < sys.float_info.max):
+            return self._solve_with_strategy(
+                problem, width_limit, height_limit, None, simanneal_minutes, simanneal_steps, show_progress, strategy="soft"
             )
-        except HardToFindSolutionException:
-            return solution_soft
-
-        is_constraints_met_soft = (solution_soft.floorplan.bounding_box[0] <= width_limit) and (
-            solution_soft.floorplan.bounding_box[1] <= height_limit
-        )
-        is_constraints_met_hard = (solution_hard.floorplan.bounding_box[0] <= width_limit) and (
-            solution_hard.floorplan.bounding_box[1] <= height_limit
-        )
-        if solution_soft.floorplan.area < solution_hard.floorplan.area:
-            solution_smaller = solution_soft
         else:
-            solution_smaller = solution_hard
-        if is_constraints_met_soft and is_constraints_met_hard:
-            return solution_smaller
-        elif is_constraints_met_soft:
-            return solution_soft
-        elif is_constraints_met_hard:
-            return solution_hard
-        else:
-            return solution_smaller
+            return self._solve_with_strategy(
+                problem, width_limit, height_limit, None, simanneal_minutes, simanneal_steps, show_progress, strategy="hard"
+            )
 
-    def _solve_with_constraints_strategy(
+    def _solve_with_strategy(
         self,
         problem: Problem,
         width_limit: Optional[float] = None,
         height_limit: Optional[float] = None,
+        initial_state: Optional[List[int]] = None,
         simanneal_minutes: float = 0.1,
         simanneal_steps: int = 100,
-        constraints_strategy: str = None,
+        show_progress: bool = False,
+        strategy: str = None,
     ) -> Solution:
-        # Initial state (= G_{+} + G_{-} + rotations)
-        init_gp = list(range(problem.n))
-        if width_limit and (width_limit < sys.float_info.max):
-            # Flat along with vertical line
-            init_gn = list(reversed(list(range(problem.n))))
+        if not initial_state:
+            # Initial state (= G_{+} + G_{-} + rotations)
+            if width_limit and (width_limit < sys.float_info.max):
+                # As flat as possible along with vertical line
+                init_gp = list(range(problem.n))
+                init_gn = list(reversed(list(range(problem.n))))
+                init_rot = [1 if r["rotatable"] and r["width"] > r["height"] else 0 for r in problem.rectangles]
+            elif height_limit and (height_limit < sys.float_info.max):
+                # As flat as possible along with horizontal line
+                init_gp = list(range(problem.n))
+                init_gn = list(range(problem.n))
+                init_rot = [1 if r["rotatable"] and r["width"] < r["height"] else 0 for r in problem.rectangles]
+            else:
+                # Random sequence pair (shuffle)
+                init_gp = random.sample(list(range(problem.n)), k=problem.n)
+                init_gn = random.sample(list(range(problem.n)), k=problem.n)
+                init_rot = [0 for _ in range(problem.n)]
+            init_state = init_gp + init_gn + init_rot
         else:
-            # Flat along with horizontal line
-            init_gn = list(range(problem.n))
-        init_rot = [0 for _ in range(problem.n)]
-        init_state = init_gp + init_gn + init_rot
+            init_state = initial_state
 
-        if constraints_strategy == "soft":
-            rpp = RectanglePackingProblemAnnealerSoft(
-                state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit
-            )
-        elif constraints_strategy == "hard":
+        if strategy == "hard":
             rpp = RectanglePackingProblemAnnealerHard(
-                state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit
+                state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit, show_progress=show_progress
+            )
+        elif strategy == "soft":
+            rpp = RectanglePackingProblemAnnealerSoft(
+                state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit, show_progress=show_progress
             )
         else:
-            raise ValueError("'constraints_strategy' must be either of ['soft', 'hard'].")
+            raise ValueError("'strategy' must be either of ['hard', 'soft'].")
 
         signal.signal(signal.SIGINT, exit_handler)
         rpp.copy_strategy = "slice"  # We use "slice" since the state is a list
@@ -162,30 +156,13 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
     The base class of the Annealer for the rectangle packing problem.
     """
 
-    @classmethod
-    def retrieve_pairs(cls, n: int, state: List[int]) -> Tuple[List[int], List[int], List[int]]:
-        """
-        Retrieve G_{+}, G_{-}, and rotations from a state.
-        """
-        gp = state[0:n]
-        gn = state[n : 2 * n]
-        rotations = state[2 * n : 3 * n]
-        return (gp, gn, rotations)
-
-
-class RectanglePackingProblemAnnealerSoft(RectanglePackingProblemAnnealer):
-    """
-    Annealer for the rectangle packing problem.
-    This annealer is based on Soft constraints strategy. In other words, it can't be helped that it may find a
-    solution violating constraints.
-    """
-
     def __init__(
         self,
         state: List[int],
         problem: Problem,
         width_limit: Optional[float] = None,
         height_limit: Optional[float] = None,
+        show_progress: bool = False,
     ) -> None:
         self.seqpair = SequencePair()
         self.problem = problem
@@ -205,60 +182,41 @@ class RectanglePackingProblemAnnealerSoft(RectanglePackingProblemAnnealer):
         if height_limit:
             self.height_limit = height_limit
         self.state: List[int] = []
-        self._step: int = 0
-        super(RectanglePackingProblemAnnealerSoft, self).__init__(state)
+        self._step: int = 0  # Current annealing step
+        self._prev_step: int = 0  # Previous step in the update method
+        self._annealing_phase: bool = False  # Annealing phase: True / Auto phase: False
+        self._progress: Any = None  # tqdm progress bar
+        self._show_progress: bool = show_progress
+        super(RectanglePackingProblemAnnealer, self).__init__(state)
 
     def update(self, step: int, T: int, E: float, acceptance: float, improvement: float) -> None:
         """
         Override the default_update method.
-        Purpose: Introduce steps, and disable stderr output.
+        Purpose: Introduce steps, disable stderr output, and progress visualization.
         """
         self._step = step
+        if self._annealing_phase and self._show_progress:
+            self._progress.update(step - self._prev_step)
+            self._prev_step = step
 
-    def move(self) -> float:
+    def anneal(self) -> Tuple[Any]:
         """
-        Move state (sequence-pair) and return the energy diff.
+        Override the anneal method for progress visualization.
         """
-        initial_energy: float = self.energy()
-        initial_state: List[int] = self.state[:]
+        self._annealing_phase = True
+        if self._show_progress:
+            self._progress = tqdm(total=self.steps, desc="Progress")
+        return super().anneal()
 
-        # Choose two indices and swap them
-        i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
-        offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
-
-        # Swap them (i != j always holds true)
-        self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]
-
-        # Random rotation
-        if self.problem.rectangles[i]["rotatable"]:
-            if random.randint(0, 1) == 1:
-                self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1
-
-        # A solution whose width/height limit is not satisfied has a larger energy.
-        # We would like to adopt a valid solution as the annealing steps proceeds.
-        energy = self.energy()
-
-        return energy - initial_energy
-
-    def energy(self) -> float:
+    @classmethod
+    def retrieve_pairs(cls, n: int, state: List[int]) -> Tuple[List[int], List[int], List[int]]:
         """
-        Calculates the area of bounding box.
+        Retrieve G_{+}, G_{-}, and rotations from a state.
         """
-
-        # Pick up sequence-pair and rotations from state
-        gp, gn, rotations = self.retrieve_pairs(n=self.problem.n, state=self.state)
-        seqpair = SequencePair(pair=(gp, gn))
-        floorplan = seqpair.decode(problem=self.problem, rotations=rotations)
-
-        # Returns the max possible area, if width/height limit is not satisfied.
-        # This solution could be chosen in the earlier steps of the annealing,
-        # but would not be chosen in the later steps.
-        if floorplan.bounding_box[0] > self.width_limit:
-            return self.max_possible_width * self.max_possible_height
-        if floorplan.bounding_box[1] > self.height_limit:
-            return self.max_possible_width * self.max_possible_height
-
-        return float(floorplan.area)
+        gp = state[0:n]
+        gn = state[n : 2 * n]
+        rotations = state[2 * n : 3 * n]
+        return (gp, gn, rotations)
 
 
 class RectanglePackingProblemAnnealerHard(RectanglePackingProblemAnnealer):
@@ -269,33 +227,6 @@ class RectanglePackingProblemAnnealerHard(RectanglePackingProblemAnnealer):
     HardToFindSolutionException.
     """
 
-    def __init__(
-        self,
-        state: List[int],
-        problem: Problem,
-        width_limit: Optional[float] = None,
-        height_limit: Optional[float] = None,
-    ) -> None:
-        self.seqpair = SequencePair()
-        self.problem = problem
-
-        self.width_limit: float = sys.float_info.max
-        if width_limit:
-            self.width_limit = width_limit
-        self.height_limit: float = sys.float_info.max
-        if height_limit:
-            self.height_limit = height_limit
-        self.state: List[int] = []
-        self._step: int = 0
-        super(RectanglePackingProblemAnnealerHard, self).__init__(state)
-
-    def update(self, step: int, T: int, E: float, acceptance: float, improvement: float) -> None:
-        """
-        Override the default_update method.
-        Purpose: Introduce steps, disable stderr output.
-        """
-        self._step = step
-
     def move(self) -> float:
         """
         Move state (sequence-pair) and return the energy diff.
@@ -303,8 +234,8 @@ class RectanglePackingProblemAnnealerHard(RectanglePackingProblemAnnealer):
         initial_energy: float = self.energy()
         initial_state: List[int] = self.state[:]
 
-        # Maximum the number of trial: 100
-        for _ in range(100):
+        # Maximum the number of trial: 10000
+        for _ in range(10000):
             # Choose two indices and swap them
             i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
             offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
@@ -345,6 +276,59 @@ class RectanglePackingProblemAnnealerHard(RectanglePackingProblemAnnealer):
             return sys.float_info.max
         if floorplan.bounding_box[1] > self.height_limit:
             return sys.float_info.max
+
+        return float(floorplan.area)
+
+
+class RectanglePackingProblemAnnealerSoft(RectanglePackingProblemAnnealer):
+    """
+    Annealer for the rectangle packing problem.
+    This annealer is based on Soft constraints strategy. In other words, it can't be helped that it may find a
+    solution violating constraints.
+    """
+
+    def move(self) -> float:
+        """
+        Move state (sequence-pair) and return the energy diff.
+        """
+        initial_energy: float = self.energy()
+        initial_state: List[int] = self.state[:]
+
+        # Choose two indices and swap them
+        i, j = random.sample(range(self.problem.n), k=2)  # The first and second index
+        offset = random.randint(0, 1) * self.problem.n  # Choose G_{+} (=0) or G_{-} (=1)
+
+        # Swap them (i != j always holds true)
+        self.state[i + offset], self.state[j + offset] = initial_state[j + offset], initial_state[i + offset]
+
+        # Random rotation
+        if self.problem.rectangles[i]["rotatable"]:
+            if random.randint(0, 1) == 1:
+                self.state[i + 2 * self.problem.n] = initial_state[i + 2 * self.problem.n] + 1
+
+        # A solution whose width/height limit is not satisfied has a larger energy.
+        # We would like to adopt a valid solution as the annealing steps proceeds.
+        energy = self.energy()
+
+        return energy - initial_energy
+
+    def energy(self) -> float:
+        """
+        Calculates the area of bounding box.
+        """
+
+        # Pick up sequence-pair and rotations from state
+        gp, gn, rotations = self.retrieve_pairs(n=self.problem.n, state=self.state)
+        seqpair = SequencePair(pair=(gp, gn))
+        floorplan = seqpair.decode(problem=self.problem, rotations=rotations)
+
+        # Returns the max possible area, if width/height limit is not satisfied.
+        # This solution could be chosen in the earlier steps of the annealing,
+        # but would not be chosen in the later steps.
+        if floorplan.bounding_box[0] > self.width_limit:
+            return self.max_possible_width * self.max_possible_height + floorplan.area
+        if floorplan.bounding_box[1] > self.height_limit:
+            return self.max_possible_width * self.max_possible_height + floorplan.area
 
         return float(floorplan.area)
 

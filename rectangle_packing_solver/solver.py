@@ -46,7 +46,11 @@ class Solver:
         height_limit: Optional[float] = None,
         simanneal_minutes: float = 0.1,
         simanneal_steps: int = 100,
+        seed: Optional[int] = None,
     ) -> Solution:
+        if seed:
+            random.seed(seed)
+
         if not isinstance(problem, Problem):
             raise TypeError("Invalid argument: 'problem' must be an instance of Problem.")
 

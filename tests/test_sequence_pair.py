@@ -126,3 +126,13 @@ def test_sequence_pair_decode_vertically(example_problem, example_pair_verticall
 
     # Area
     assert floorplan.area == 72.8
+
+
+def test_sequence_pair_operators(example_pair_horizontally, example_pair_vertically):  # noqa: F811
+    seqpair_1 = rps.SequencePair(pair=example_pair_horizontally)
+    seqpair_2 = rps.SequencePair(pair=example_pair_horizontally)
+    seqpair_3 = rps.SequencePair(pair=example_pair_vertically)
+
+    assert id(seqpair_1) != id(seqpair_2) != id(seqpair_3)
+    assert seqpair_1 == seqpair_2
+    assert seqpair_1 != seqpair_3

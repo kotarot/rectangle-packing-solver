@@ -129,8 +129,8 @@ def test_solver_with_invalid_height_limit(example_problem):  # noqa: F811
 ################################################################
 
 
-@pytest.mark.parametrize('width_limit', [19, 17, 15])
-@pytest.mark.parametrize('height_limit', [17, 15, 13])
+@pytest.mark.parametrize("width_limit", [19, 17, 15])
+@pytest.mark.parametrize("height_limit", [17, 15, 13])
 def test_solver_with_tight_limits(width_limit, height_limit):
     # Note: See PR #23 for details.
     problem = rps.Problem(

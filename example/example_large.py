@@ -25,7 +25,9 @@ def main():
 
     # Find a solution
     print("\n=== Solving without width/height constraints ===")
-    solution = rps.Solver().solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500, show_progress=True, seed=1234)
+    solution = rps.Solver().solve(
+        problem=problem, simanneal_minutes=1.0, simanneal_steps=500, show_progress=True, seed=1234
+    )
     print("solution:", solution)
 
     # Visualization (to floorplan_large.png)
@@ -33,7 +35,9 @@ def main():
 
     # Find a solution (with limit)
     print("\n=== Solving with a width/height constraints ===")
-    solution = rps.Solver().solve(problem=problem, simanneal_minutes=1.0, simanneal_steps=500, height_limit=50.0, show_progress=True, seed=1234)
+    solution = rps.Solver().solve(
+        problem=problem, simanneal_minutes=1.0, simanneal_steps=500, height_limit=50.0, show_progress=True, seed=1234
+    )
     print("solution:", solution)
     rps.Visualizer().visualize(solution=solution, path="./figs/floorplan_large_limit.png")
 

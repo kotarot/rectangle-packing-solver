@@ -59,7 +59,14 @@ class Solver:
         # If width/height limits are not given...
         if (width_limit is None) and (height_limit is None):
             return self._solve_with_strategy(
-                problem, width_limit, height_limit, None, simanneal_minutes, simanneal_steps, show_progress, strategy="hard"
+                problem,
+                width_limit,
+                height_limit,
+                None,
+                simanneal_minutes,
+                simanneal_steps,
+                show_progress,
+                strategy="hard",
             )
 
         # If width/height limits are given...
@@ -88,11 +95,25 @@ class Solver:
         #      Find a solution with smallest area as possible, the width/height limits may not be met.
         if (width_limit < sys.float_info.max) and (height_limit < sys.float_info.max):
             return self._solve_with_strategy(
-                problem, width_limit, height_limit, None, simanneal_minutes, simanneal_steps, show_progress, strategy="soft"
+                problem,
+                width_limit,
+                height_limit,
+                None,
+                simanneal_minutes,
+                simanneal_steps,
+                show_progress,
+                strategy="soft",
             )
         else:
             return self._solve_with_strategy(
-                problem, width_limit, height_limit, None, simanneal_minutes, simanneal_steps, show_progress, strategy="hard"
+                problem,
+                width_limit,
+                height_limit,
+                None,
+                simanneal_minutes,
+                simanneal_steps,
+                show_progress,
+                strategy="hard",
             )
 
     def _solve_with_strategy(
@@ -129,11 +150,19 @@ class Solver:
 
         if strategy == "hard":
             rpp = RectanglePackingProblemAnnealerHard(
-                state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit, show_progress=show_progress
+                state=init_state,
+                problem=problem,
+                width_limit=width_limit,
+                height_limit=height_limit,
+                show_progress=show_progress,
             )
         elif strategy == "soft":
             rpp = RectanglePackingProblemAnnealerSoft(
-                state=init_state, problem=problem, width_limit=width_limit, height_limit=height_limit, show_progress=show_progress
+                state=init_state,
+                problem=problem,
+                width_limit=width_limit,
+                height_limit=height_limit,
+                show_progress=show_progress,
             )
         else:
             raise ValueError("'strategy' must be either of ['hard', 'soft'].")
@@ -199,7 +228,7 @@ class RectanglePackingProblemAnnealer(simanneal.Annealer):
             self._progress.update(step - self._prev_step)
             self._prev_step = step
 
-    def anneal(self) -> Tuple[Any]:
+    def anneal(self) -> Any:
         """
         Override the anneal method for progress visualization.
         """
